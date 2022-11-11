@@ -1,8 +1,5 @@
-# InsultBlock
+# InsultBlock Project
 
-
-## Name
-Insult Block project
 
 ## Description
 Détecteur d'insulte intelligent sur Twitter. Détection des insultes, analyse de la répercussion d'une insulte sur les autres commentaires d'un tweet et visualisation des insultes de chaque utilisateur avec des statistiques (max, min, moyenne d'insultes par utilisateur selon certaines catégories). Visualisation prévue sur Dash/Seaborn/Plotly et aussi WordCloud.
@@ -22,10 +19,10 @@ Pas de support pour l'instant
 
 ## Roadmap
 
-[ ] création du détecteur d'insultes
-[ ] récupération des tweets
-[ ] mise en place de l'interface graphique (Dash/Seaborn/Plotly)
-[ ] développement d'une méthode de signalement et blocage automatique. Voire d'un système de post de tweet pour signaler des groupes haineux/ groupes de harcèlement.
+1. Création du détecteur d'insultes
+2. Récupération des tweets
+3. Mise en place de l'interface graphique (Dash/Seaborn/Plotly)
+4. Développement d'une méthode de signalement et blocage automatique. Voire d'un système de post de tweet pour signaler des groupes haineux/ groupes de harcèlement.
 
 ## Contributing
 Ce projet est ouvert à contribution. Les idées sont bienvenues
@@ -34,10 +31,10 @@ Cependant, toute personne voulant apporter une fonctionnalité ou une améliorat
 
 ## Authors and acknowledgment
 
-Hugues du Moulinet d'Hardemare: Maintainer
-Alix Peyrot: Maintainer
-Paul-Aimery de Vaumas: Maintainer
-Alexandre Gravereaux: Owner
+Hugues du Moulinet d'Hardemare: Maintainer  
+Alix Peyrot: Maintainer  
+Paul-Aimery de Vaumas: Maintainer  
+Alexandre Gravereaux: Owner  
 
 ## License
 License Creative Commons CC-BY-NC-ND-SA
