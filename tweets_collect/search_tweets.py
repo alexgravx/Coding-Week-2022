@@ -99,6 +99,10 @@ def get_queries(candidate_name):
 
 
 def get_tweets_queries(queries):
+    """
+    queries est une liste
+    renvoie la liste des tweets T
+    """
     T = []
     n = len(queries)
     print(n)
