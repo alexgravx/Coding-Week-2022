@@ -1,0 +1,204 @@
+## Importations ##
+
+import tweepy
+from tweepy.streaming import StreamingClient
+from projet_w2.InsultBlock.tweets_collect.api_connection import twitter_setup
+from projet_w2.credentials import *
+
+# Fonctions
+
+# Collecte des tweets (SEARCH)
+
+
+def collect(word, language="fr", nb=100):
+    connexion = twitter_setup()
+    tweets = connexion.search_tweets(word, lang=language, count=nb)
+    return tweets
+
+
+# Collecte des données users (USERS)
+def collect_by_user(user_id):
+    connexion = twitter_setup()
+    tweets = connexion.user_timeline(id=user_id, count=100)
+    return tweets
+
+# Recherche continue (STREAM)
+
+
+class IDPrinter(tweepy.StreamingClient):
+
+    def on_tweet(self, tweet):
+        # Passage heure d'hiver
+        time = str(tweet.created_at)[11:19]
+        heure = str(int(time[0:2]) + 1)
+        T = list(time)
+        T[0] = heure[0]
+        T[1] = heure[1]
+        time = ''.join(T)
+        print(f"{time} : {tweet.text}")
+        print("-"*130)
+
+    # Cas d'un erreur
+    def on_error(self, status):
+        if str(status) == "420":
+            print(status)
+            print(
+                "You exceed a limited number of attempts to connect to the streaming API")
+            return False
+        else:
+            return True
+
+
+def collect_by_streaming(mot_clef):
+    printer = IDPrinter(BEARER_TOKEN)
+
+    # Clean up pre existing rules
+    rule_ids = []
+    result = printer.get_rules()
+    for rule in result.data:
+        rule_ids.append(rule.id)
+
+    if (len(rule_ids) > 0):
+        printer.delete_rules(rule_ids)
+        printer = IDPrinter(BEARER_TOKEN)
+
+    # Mise en place du streaming
+    printer.add_rules(tweepy.StreamRule(mot_clef + " lang:fr"))
+    # printer.add_rules(tweepy.StreamRule("-is:retweet"))
+    printer.filter(tweet_fields="created_at")
+    printer.sample()
+
+# Fichiers
+
+
+file_path_1 = './projet_w2/InsultBlock/tweets_collect/twitter_candidate_data/keywords_candidate_n.txt'
+file_path_2 = './projet_w2/InsultBlock/tweets_collect/twitter_candidate_data/hashtag_candidate_n.txt'
+
+
+def get_queries(candidate_name):
+    """
+    Generate and return a list of string queries for the search Twitter API from the file file_path_num_candidate.txt
+    num_candidate: the number of the candidate
+    file_path: the path to the keyword and hashtag files
+
+    return: (list) a list of string queries that can be done to the search API independently
+    """
+    queries = []
+    with open(file_path_1, 'r', encoding='utf-8') as f:
+        # on utilise read().splitlines() à la place de readlines() pour éviter le caractère <\n> en fin de ligne
+        Keywords = f.read().splitlines()
+    with open(file_path_2, 'r', encoding='utf-8') as f:
+        Hastags = f.read().splitlines()
+
+    # Création des requetes keywords et hashtag liées aux candidats
+    for i in Keywords:
+        queries.append(candidate_name + " AND " + i)
+    for j in Hastags:
+        queries.append(candidate_name + " AND " + j)
+    return queries
+
+
+def get_tweets_queries(queries):
+    T = []
+    n = len(queries)
+    print(n)
+    for i in range(n):
+        # On récupère les tweets associés aux queries
+        tweets = collect(queries[i])
+        for tweet in tweets:
+            T.append(tweet)
+    return T
+
+# Twitts postés par la personnalité: utilisation de users
+
+
+def get_tweets_postedby(candidate_name):
+    T = []
+    tweets = collect_by_user(candidate_name)
+    for tweet in tweets:
+        T.append(tweet)
+    return T
+
+# Retweets aux tweets (nombre) de la personnalité:
+
+
+def get_retweets(candidate_name):
+    L = []
+    tweets = collect_by_user(candidate_name)
+    print(tweets)
+    for tweet in tweets:
+        L.append(tweet.retweet_count)
+    N = sum(L)
+    return N
+
+
+# Réponses à un tweet:
+
+def get_response(twit_id, user_name):
+    rep = []
+    api = twitter_setup()
+    tweets = tweepy.Cursor(
+        api.user_timeline, screen_name=user_name).items(50)
+    for tweet in tweets:
+        print(tweet)
+        print("\n")
+        if hasattr(tweet, 'in_reply_to_status_id_str'):
+            if (tweet.in_reply_to_status_id == twit_id):
+                rep.append((tweet))
+    return rep
+
+
+## Tests ##
+
+
+def test_collect():
+    L = collect("Bitcoin")
+    assert L != None
+    for k in L:
+        assert type(k.text) == str
+
+
+def test_collect_by_user():
+    L = collect_by_user("EmmanuelMacron")
+    assert L != None
+    for k in L:
+        assert type(k.text) == str
+
+
+def test_get_queries():
+    L = get_queries("EmmanuelMacron")
+    assert L != None
+    for k in L:
+        assert type(k) == str
+        assert "AND" in k
+
+
+def test_get_tweets_queries():
+    T = get_tweets_queries("EmmanuelMacron")
+    assert T != None
+    for k in T:
+        assert type(k.text) == str
+
+
+def test_get_tweets_postedby():
+    L = get_tweets_postedby("EmmanuelMacron")
+    assert L != None
+    for k in L:
+        assert type(k.text) == str
+        assert k.user.screen_name == "EmmanuelMacron"
+
+
+def test_get_retweets():
+    N = get_retweets("EmmanuelMacron")
+    assert N != None
+    assert type(N) == int
+    assert N >= 0
+
+
+## Execution du programme ##
+
+
+if __name__ == '__main__':
+    # collect_by_streaming("ethereum")
+    # print(get_queries("EmmanuelMacron"))
+    get_response('288777328', "EmmanuelMacron")
