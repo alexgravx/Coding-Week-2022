@@ -17,9 +17,9 @@ def collect(word, language="fr", nb=100):
 
 
 # Collecte des données users (USERS)
-def collect_by_user(user_id):
+def collect_by_user(user_name):
     connexion = twitter_setup()
-    tweets = connexion.user_timeline(id=user_id, count=100)
+    tweets = connexion.user_timeline(screen_name=user_name, count=100)
     return tweets
 
 # Recherche continue (STREAM)
@@ -68,7 +68,8 @@ def collect_by_streaming(mot_clef):
     printer.filter(tweet_fields="created_at")
     printer.sample()
 
-# Fichiers
+
+# Avec des queries mots-clefs et hashtag définies dans un fichier
 
 
 file_path_1 = './projet_w2/InsultBlock/tweets_collect/twitter_candidate_data/keywords_candidate_n.txt'
@@ -113,7 +114,7 @@ def get_tweets_queries(queries):
             T.append(tweet)
     return T
 
-# Twitts postés par la personnalité: utilisation de users
+# Twitts postés par la personne
 
 
 def get_tweets_postedby(candidate_name):
@@ -123,7 +124,7 @@ def get_tweets_postedby(candidate_name):
         T.append(tweet)
     return T
 
-# Retweets aux tweets (nombre) de la personnalité:
+# Retweets aux tweets (nombre) de la personne:
 
 
 def get_retweets(candidate_name):
@@ -142,12 +143,12 @@ def get_response(twit_id, user_name):
     rep = []
     api = twitter_setup()
     tweets = tweepy.Cursor(
-        api.user_timeline, screen_name=user_name).items(50)
+        api.search_tweets, q='to:'+user_name).items(10000)
     for tweet in tweets:
-        print(tweet)
-        print("\n")
+        # print(tweet)
+        # print("\n")
         if hasattr(tweet, 'in_reply_to_status_id_str'):
-            if (tweet.in_reply_to_status_id == twit_id):
+            if (tweet.in_reply_to_status_id_str == twit_id):
                 rep.append((tweet))
     return rep
 
@@ -185,9 +186,11 @@ def test_get_tweets_queries():
 
 
 def test_get_tweets_postedby():
-    L = get_tweets_postedby("EmmanuelMacron")
-    assert L != None
-    for k in L:
+    Tweets = get_tweets_postedby("EmmanuelMacron")
+    assert Tweets != None
+    assert type(Tweets) == list
+    assert len(Tweets) >= 0
+    for k in Tweets:
         assert type(k.text) == str
         assert k.user.screen_name == "EmmanuelMacron"
 
@@ -204,5 +207,9 @@ def test_get_retweets():
 
 if __name__ == '__main__':
     # collect_by_streaming("ethereum")
-    # print(get_queries("EmmanuelMacron"))
-    get_response('288777328', "EmmanuelMacron")
+
+    #T = collect_by_user("GravereauxDev")
+    # print(T[0])
+    #R = get_response(T[0].id, "GravereauxDev")
+
+    print("ok")

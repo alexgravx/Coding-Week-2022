@@ -1,30 +1,25 @@
 ## Importations ##
 
 import json
-from projet_w2.InsultBlock.tweets_collect.main_collect import *
+from projet_w2.InsultBlock.tweets_collect.search_tweets import *
 
 ## Fonctions ##
 
 
-def to_json(username, subject):
-    tweets = main(username, subject, [])
+def to_json(tweets, nom_fichier):
+    """
+    tweets: liste de tweets en entrée
+    Ne renvoie rien (procédure) mais crée un fichier json avec les données associées
+    """
     L_json = []
     for k in tweets:
         data = k._json
         L_json.append(data)
-    with open("./projet_w2/InsultBlock/tweets_data/data.json", "a") as file:
-        json.dump(L_json, file)
 
-## Test ##
-
-
-def test_to_json():
-    to_json("EmmanuelMacron", "agriculture")
-    with open("./projet_w2/InsultBlock/tweets_data/data.json", "r") as file:
-        assert file.readline() != None
-
-## Execution ##
-
-
-if __name__ == '__main__':
-    to_json("EmmanuelMacron", "agriculture")
+    try:
+        with open("./projet_w2/InsultBlock/tweets_data/" + nom_fichier, 'r') as file:
+            L = json.load(file)
+            pass
+    except IOError:
+        with open("./projet_w2/InsultBlock/tweets_data/" + nom_fichier, "w") as file:
+            json.dump(L_json, file)

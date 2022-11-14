@@ -1,30 +1,32 @@
 ## Importations ##
 
-from projet_w2.InsultBlock.tweets_collect.search_tweets import *
 
-## Fonctions ##
+from projet_w2.InsultBlock.tweets_collect.to_json import *
+from projet_w2.InsultBlock.tweets_collect.to_dataframe import *
+
+## Programme ##
 
 
-def main(username, subject, Tweets):
+def main(username, subject):
     Tweets_1 = get_tweets_postedby(username)
     Tweets_2 = get_tweets_queries([subject])
-    Tweets += Tweets_1 + Tweets_2
-    return Tweets
+    Tweets = Tweets_1 + Tweets_2
+    nom_fichier = 'data_' + username + '_' + subject + '.json'
+    to_json(Tweets, nom_fichier)
+    data = to_dataframe(nom_fichier)
+    return data
 
+## Tests ##
 
-## Test ##
 
 def test_main():
-    Tweets = []
-    Tweets = main("EmmanuelMacron", "agriculture", Tweets)
-    assert Tweets != None
-    assert type(Tweets) == list
-    assert len(Tweets) >= 0
+    data = main("EmmanuelMacron", "agriculture")
+    assert data.empty == False
+    assert data['text'].empty == False
+    assert type(data['text'][0]) == str
 
 ## Execution ##
 
 
 if __name__ == '__main__':
-    Tweets = []
-    Tweets = main("EmmanuelMacron", "agriculture", Tweets)
-    print(Tweets)
+    data = main("EmmanuelMacron", "agriculture")
