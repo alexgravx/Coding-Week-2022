@@ -7,7 +7,7 @@ from projet_w2.InsultBlock.tweets_collect.to_dataframe import *
 ## Programme ##
 
 
-def main_user(username, nombre):
+def main_user(username, nombre=100):
     Tweets = get_tweets_postedby(username, nombre)
     nom_fichier = 'data_' + username + '.json'
     to_json(Tweets, nom_fichier)
@@ -16,7 +16,7 @@ def main_user(username, nombre):
     return data
 
 
-def main_subject(subject, nombre):
+def main_subject(subject, nombre=100):
     Tweets = get_tweets_queries([subject], nombre)
     nom_fichier = 'data_' + subject + '.json'
     to_json(Tweets, nom_fichier)
