@@ -116,7 +116,6 @@ def get_tweets_queries(queries, number=100):
     """
     T = []
     n = len(queries)
-    print(n)
     for i in range(n):
         # On récupère les tweets associés aux queries
         tweets = collect(queries[i], "fr", number)

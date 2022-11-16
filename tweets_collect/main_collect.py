@@ -1,6 +1,5 @@
 ## Importations ##
 
-
 from projet_w2.InsultBlock.tweets_collect.to_json import *
 from projet_w2.InsultBlock.tweets_collect.to_dataframe import *
 
@@ -44,5 +43,4 @@ def test_main_subject():
 
 
 if __name__ == '__main__':
-    data = main_user("EmmanuelMacron")
-    data = main_subject("agriculture")
+    data = main_subject("cryptommonnaies")
