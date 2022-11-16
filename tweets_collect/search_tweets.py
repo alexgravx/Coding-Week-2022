@@ -17,9 +17,9 @@ def collect(word, language="fr", nb=100):
 
 
 # Collecte des données users (USERS)
-def collect_by_user(user_name):
+def collect_by_user(user_name, nb=100):
     connexion = twitter_setup()
-    tweets = connexion.user_timeline(screen_name=user_name, count=100)
+    tweets = connexion.user_timeline(screen_name=user_name, count=nb)
     return tweets
 
 # Recherche continue (STREAM)
@@ -99,7 +99,7 @@ def get_queries(candidate_name):
     return queries
 
 
-def get_tweets_queries(queries):
+def get_tweets_queries(queries, number=100):
     """
     queries est une liste
     renvoie la liste des tweets T
@@ -109,7 +109,7 @@ def get_tweets_queries(queries):
     print(n)
     for i in range(n):
         # On récupère les tweets associés aux queries
-        tweets = collect(queries[i])
+        tweets = collect(queries[i], "fr", number)
         for tweet in tweets:
             T.append(tweet)
     return T
@@ -117,9 +117,9 @@ def get_tweets_queries(queries):
 # Twitts postés par la personne
 
 
-def get_tweets_postedby(candidate_name):
+def get_tweets_postedby(candidate_name, number=100):
     T = []
-    tweets = collect_by_user(candidate_name)
+    tweets = collect_by_user(candidate_name, number)
     for tweet in tweets:
         T.append(tweet)
     return T
