@@ -5,8 +5,7 @@
 from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
-from sklearn.feature_extraction.text import TfidfTransformer
-from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.feature_extraction.text import TfidfTransformer, CountVectorizer
 from nltk.stem import WordNetLemmatizer
 from nltk.corpus import stopwords
 import pickle
@@ -19,14 +18,15 @@ from sklearn.datasets import load_files
 # dataset
 
 
-def creation_dataset():
+def creation_dataset(nom_fichier):
     """
-    retourne deux arrays sklearn
+    entree: nom du fichier .csv en chaine de caractères (str)
+    sortie:
     X pour les données (type pandas.Series)
     y pour les labels = objectifs de valeurs à atteindre: 1 si insulte et 0 sinon) (type pandas.Series)
     """
     data = pandas.read_csv(
-        '/Users/alexandregravereaux/Desktop/CW/projet_w2/InsultBlock/insult_detector/train_data/train.csv', sep=',')
+        '/Users/alexandregravereaux/Desktop/CW/projet_w2/InsultBlock/insult_detector/train_data/' + nom_fichier, sep=',')
     data = data[['tweet', 'label']][:4000]
     X_data = data['tweet']
     y = data['label']
@@ -67,14 +67,14 @@ def preprocessing(X_data):
 ## Creation du modèle de ML ##
 
 
-def conversion_sklearn(documents):
+def conversion_sklearn(documents, min_tweet=5, max_tweet=0.7):
     """
     entrée: documents, liste des tweets lemmatizés et classés selon le même ordre qu'au début;
     sortie: X, tableau numpy np.ndarray converti pour sklearn (tableaux de nombres);
     """
     # Tri des données en mots et passage en forme lisible par l'algorithme
     vectorizer = CountVectorizer(
-        max_features=1500, min_df=5, max_df=0.7, stop_words=stopwords.words('english'))
+        max_features=1500, min_df=min_tweet, max_df=max_tweet, stop_words=stopwords.words('english'))
     X = vectorizer.fit_transform(documents).toarray()
 
     # Analyse TFIDF for "Term frequency" and "Inverse Document Frequency"
@@ -112,7 +112,7 @@ def entrainement_modele(X_train, y_train):
 ## Tests ##
 
 def test_creation_dataframe():
-    X_data, y = creation_dataset()
+    X_data, y = creation_dataset('train.csv')
     assert type(X_data) == pandas.Series
     assert type(y) == pandas.Series
     assert 0 in y
@@ -120,21 +120,21 @@ def test_creation_dataframe():
 
 
 def test_preprocessing():
-    X_data, y = creation_dataset()
+    X_data, y = creation_dataset('train.csv')
     documents = preprocessing(X_data)
     assert type(documents) == list
     assert type(documents[0]) == str
 
 
 def test_conversion_sklearn():
-    X_data, y = creation_dataset()
+    X_data, y = creation_dataset('train.csv')
     documents = preprocessing(X_data)
     X = conversion_sklearn(documents)
     assert type(X) == np.ndarray
 
 
 def test_decoupage():
-    X_data, y = creation_dataset()
+    X_data, y = creation_dataset('train.csv')
     documents = preprocessing(X_data)
     X = conversion_sklearn(documents)
     X_train, X_test, y_train, y_test = decoupage_dataset(X, y)

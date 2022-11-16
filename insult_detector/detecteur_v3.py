@@ -7,6 +7,8 @@ from projet_w2.InsultBlock.insult_detector.sklearn_entrainement import *
 
 ## Fonctions ##
 
+X_data, y = creation_dataset('train2.csv')
+
 
 def chargement(nom_modele):
     """
@@ -19,15 +21,16 @@ def chargement(nom_modele):
     return model
 
 
-def detecteur_v3(text, model):
+def detecteur_v3(X_data, model):
     """
     détecte si un tweet est une insulte ou non
     entrée: chaine de caractère/str qui correspond au tweet, model RandomForest ou autre de ML
     sortie: 1 si c'est haineux, 0 sinon
     """
-    L = pd.Series(text)
-    X_test = conversion_sklearn(L)
-    b = model.predict(text)
+    L = preprocessing(X_data)
+    X_test = conversion_sklearn(L, 5, 0.7)
+    X_test = X_test[:, :1123]
+    b = model.predict(X_test)
     return b
 
 ## Tests ##
@@ -40,14 +43,14 @@ def test_chargement():
 
 def test_detecteur_v3():
     model = chargement('text_classifier')
-    b = detecteur_v3(model, 'test')
+    b = detecteur_v3(X_data, model)
     assert type(b) == np.ndarray
 
 ## Execution ##
 
 
 if __name__ == '__main__':
-    test_chargement()
-    #model = chargement('text_classifier')
-    #b = detecteur_v3('Sandrine Rousseau messed up with his fucking politics')
-    # print(b)
+    model = chargement('text_classifier')
+    b = detecteur_v3(X_data, model)
+    print(b)
+    print(np.where(b == 1))
