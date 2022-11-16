@@ -9,7 +9,7 @@ from projet_w2.InsultBlock.tweets_collect.to_dataframe import *
 
 def main_user(username, nombre):
     Tweets = get_tweets_postedby(username, nombre)
-    nom_fichier = 'data_' + username + '_' + '.json'
+    nom_fichier = 'data_' + username + '.json'
     to_json(Tweets, nom_fichier)
     data = to_dataframe(nom_fichier)
     data = epuration_dataframe(data)
@@ -18,7 +18,7 @@ def main_user(username, nombre):
 
 def main_subject(subject, nombre):
     Tweets = get_tweets_queries([subject], nombre)
-    nom_fichier = 'data_' + '_' + subject + '.json'
+    nom_fichier = 'data_' + subject + '.json'
     to_json(Tweets, nom_fichier)
     data = to_dataframe(nom_fichier)
     data = epuration_dataframe(data)
