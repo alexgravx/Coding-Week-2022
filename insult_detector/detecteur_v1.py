@@ -116,7 +116,7 @@ def contains(small, big):  # renvoie si une liste appartient une autre (avec les
     return False
 
 
-def det_insultes(txt):  # renvoie si le texte est insultant ou non
+def detecteur_v1(txt):  # renvoie si le texte est insultant ou non
 
     l = nettoyage_total(txt)
     b = False
@@ -128,11 +128,8 @@ def det_insultes(txt):  # renvoie si le texte est insultant ou non
                 b = True
                 ins.append(i)
 
-    if b == False:
-        return "Ce tweet n'est pas insultant"
-
-    return f"Ce tweet est insultant et les insultes sont {ins}"
+    return b
 
 
 if __name__ == "__main__":
-    print(det_insultes(texte_en))
+    print(detecteur_v1(texte_en))

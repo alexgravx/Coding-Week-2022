@@ -32,7 +32,7 @@ def epuration_dataframe(data_brut):
     Amélioration de la date
     '''
     data_twitter = data_brut[['id', 'created_at', 'favorite_count', 'lang', 'retweet_count', 'text', 'user.id', 'user.name', 'user.screen_name',
-                              'user.created_at', 'user.description', 'user.favourites_count', 'user.followers_count', 'user.friends_count', 'user.location', 'user.verified', 'entities.user_mentions']]
+                              'user.created_at', 'user.description', 'user.favourites_count', 'user.followers_count', 'user.friends_count', 'user.location', 'user.verified', 'entities.user_mentions']].copy()
 
     data_twitter['created_at'] = data_twitter['created_at'].apply(
         lambda x: x[0:19])
