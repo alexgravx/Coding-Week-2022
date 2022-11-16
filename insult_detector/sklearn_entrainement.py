@@ -15,6 +15,7 @@ import re
 import nltk
 from sklearn.datasets import load_files
 
+
 # dataset
 
 
@@ -27,13 +28,17 @@ def creation_dataset(nom_fichier):
     """
     data = pandas.read_csv(
         '/Users/alexandregravereaux/Desktop/CW/projet_w2/InsultBlock/insult_detector/train_data/' + nom_fichier, sep=',')
-    data = data[['tweet', 'label']][:4000]
+    data = data[['tweet', 'label']][:1000]
     X_data = data['tweet']
     y = data['label']
     return (X_data, y)
 
 
 ## Preprocessing ##
+vectorizer = CountVectorizer(
+    max_features=1500, min_df=5, max_df=0.7, stop_words=stopwords.words('english'))
+tfidfconverter = TfidfTransformer()
+
 
 def preprocessing(X_data):
     """
@@ -73,16 +78,28 @@ def conversion_sklearn(documents, min_tweet=5, max_tweet=0.7):
     sortie: X, tableau numpy np.ndarray converti pour sklearn (tableaux de nombres);
     """
     # Tri des données en mots et passage en forme lisible par l'algorithme
-    vectorizer = CountVectorizer(
-        max_features=1500, min_df=min_tweet, max_df=max_tweet, stop_words=stopwords.words('english'))
     X = vectorizer.fit_transform(documents).toarray()
 
-    # Analyse TFIDF for "Term frequency" and "Inverse Document Frequency"
+    # Analyse TFIDF for "Term frequency" and "Inverse Tweet Frequency"
     # Term frequency = (Number of Occurrences of a word)/(Total words in the document)
     # IDF(word) = Log((Total number of documents)/(Number of documents containing the word))
     # Cela permet de jauger entre la forte présence d'un mot dans un document par rapport à sa forte présence dans l'ensemble des documents
-    tfidfconverter = TfidfTransformer()
     X = tfidfconverter.fit_transform(X).toarray()
+    return X
+
+
+def conversion_sklearn_2(documents, vectorizer, tfidfconverter):
+    """
+    entrée: documents, liste des tweets lemmatizés et classés selon le même ordre qu'au début;
+    sortie: X, tableau numpy np.ndarray converti pour sklearn (tableaux de nombres);
+    """
+    # Tri des données en mots et passage en forme lisible par l'algorithme
+    X = vectorizer.transform(documents).toarray()
+
+    # Analyse TFIDF for "Term frequency" and "Inverse Tweet Frequency"
+    # Term frequency = (Number of Occurrences of a word)/(Total words in the document)
+    # IDF(word) = Log((Total number of documents)/(Number of documents containing the word))
+    X = tfidfconverter.transform(X).toarray()
     return X
 
 
@@ -150,20 +167,20 @@ if __name__ == '__main__':
 
     # Creation du modèle de ML
     print("*Creation du dataset en cours* \n")
-    X, y = creation_dataset()
+    X, y = creation_dataset('train.csv')
     print("*Preprocessing en cours* \n")
     documents = preprocessing(X)
     print("*Creation du modèle en cours* \n")
-    X = conversion_sklearn(documents)
-    X_train, X_test, y_train, y_test = decoupage_dataset(X, y)
-    classifier = entrainement_modele(X_train, y_train)
-    y_pred = classifier.predict(X_test)
-
+    X = conversion_sklearn(documents, vectorizer, tfidfconverter)
+    #X_train, X_test, y_train, y_test = decoupage_dataset(X, y)
+    classifier = entrainement_modele(X, y)
+    #y_pred = classifier.predict(X_test)
+    """
     # Affichage des matrices d'efficacité du modèle
     print(confusion_matrix(y_test, y_pred))
     print(classification_report(y_test, y_pred))
     print(accuracy_score(y_test, y_pred))
-
+    """
     # Sauvegarde dy modèle
     with open('/Users/alexandregravereaux/Desktop/CW/projet_w2/InsultBlock/insult_detector/train_data/text_classifier', 'wb') as picklefile:
-        pickle.dump(classifier, picklefile)
+        pickle.dump((classifier, vectorizer, tfidfconverter), picklefile)

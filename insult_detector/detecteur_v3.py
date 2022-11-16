@@ -17,19 +17,20 @@ def chargement(nom_modele):
     sortie: modèle de machine learning (objet RandomForest)
     """
     with open('/Users/alexandregravereaux/Desktop/CW/projet_w2/InsultBlock/insult_detector/train_data/' + nom_modele, 'rb') as training_model:
-        model = pickle.load(training_model)
-    return model
+        model, vectorizer, tfidfconverter = pickle.load(training_model)
+
+    return model, vectorizer, tfidfconverter
 
 
-def detecteur_v3(X_data, model):
+def detecteur_v3(X_data, model, vectorizer, tfidfconverter):
     """
     détecte si un tweet est une insulte ou non
     entrée: chaine de caractère/str qui correspond au tweet, model RandomForest ou autre de ML
     sortie: 1 si c'est haineux, 0 sinon
     """
     L = preprocessing(X_data)
-    X_test = conversion_sklearn(L, 5, 0.7)
-    X_test = X_test[:, :1123]
+    X_test = conversion_sklearn_2(L, vectorizer, tfidfconverter)
+    X_test = X_test
     b = model.predict(X_test)
     return b
 
@@ -50,7 +51,7 @@ def test_detecteur_v3():
 
 
 if __name__ == '__main__':
-    model = chargement('text_classifier')
-    b = detecteur_v3(X_data, model)
+    model, vectorizer, tfidfconverter = chargement('text_classifier')
+    b = detecteur_v3(X_data, model, vectorizer, tfidfconverter)
     print(b)
     print(np.where(b == 1))
