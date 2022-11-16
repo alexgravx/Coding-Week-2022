@@ -7,9 +7,8 @@ import dash_core_components as dcc
 import plotly.express as px
 from dash.dependencies import Input, Output
 import pandas as pd
-from projet_w2.InsultBlock.visualisation_gui.app import fig  # , fig1
-# data source: https://www.kaggle.com/chubak/iranian-students-from-1968-to-2017
-# data owner: Chubak Bidpaa
+from projet_w2.InsultBlock.visualisation_gui.app import fig, fig1
+
 df = pd.read_csv(
     'https://raw.githubusercontent.com/Coding-with-Adam/Dash-by-Plotly/master/Bootstrap/Side-Bar/iranian_students.csv')
 
@@ -39,7 +38,7 @@ sidebar = html.Div(
         html.H2("InsultBlock", className="display-4"),
         html.Hr(),
         html.P(
-            "Alexandre est nul", className="lead"
+            "Recherche par", className="lead"
         ),
         dbc.Nav(
             [
@@ -75,20 +74,18 @@ def render_page_content(pathname):
 
         ]
     elif pathname == "/subject":
-
         return [
-            html.H1("Insulte par système d'exploitation sur les tweets de Macron"),
-            # style={'textAlign': 'center'}),
-            dcc.Graph(id='example-graph', figure=fig)
+            html.H1('Insulte par thème',
+                    style={'textAlign': 'center'}),
 
         ]
-    # elif pathname == "/user":
-     #   return [
-      #      html.H1('Insulte par utilisateur',
-       #             style={'textAlign': 'center'}),
-        #    dcc.Graph(id='life-exp-vs-gdp', figure=fig1)
+    elif pathname == "/user":
+        return [
+            html.H1('Insulte par utilisateur',
+                    style={'textAlign': 'center'}),
+            dcc.Graph(id='life-exp-vs-gdp', figure=fig1)
 
-        # ]
+        ]
     # If the user tries to reach a different page, return a 404 message
     return dbc.Jumbotron(
         [
