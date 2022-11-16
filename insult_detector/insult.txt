@@ -5,37 +5,22 @@ aller se faire enculer
 aller se faire endauffer
 aller se faire foutre
 aller se faire mettre
-andouille
 anglo-fou
 appareilleuse
-assimilé
-assimilée
-astèque
-avorton
 bachi-bouzouk
-baleine
-bande d’abrutis
+abrutis
 baraki
 bâtard
 baudet
 beauf
 bellicole
 bête
-bête à pleurer
-bête comme ses pieds
-bête comme un chou
-bête comme un cochon
-bête comme un cygne
-bête comme une oie
 biatch
-bibi
-bic
 bicot
 bicotte
 bique
 bite
 bitembois
-Bitembois
 bolos
 bordille
 boucaque
@@ -48,37 +33,26 @@ bougnoule
 Bougnoulie
 bougnoulisation
 bougnouliser
-bougre
 boukak
-boulet
 bounioul
 bounioule
 bourdille
-bourrer
 bourricot
 bovo
 branleur
-bridé
-bridée
-brigand
 brise-burnes
-bulot
 cacou
 cafre
-cageot
 caldoche
 carcavel
 casse-bonbon
 casse-couille
 casse-couilles
-cave
 chagasse
 chaoui
-charlot de vogue
-charogne
+charlot
 chauffard
 chbeb
-cheveux bleus
 chiabrena
 chien de chrétien
 chiennasse
@@ -93,19 +67,8 @@ chintok
 chleuh
 chnoque
 choucroutard
-citrouille
 coche
-colon
-complotiste
 con
-con comme la lune
-con comme ses pieds
-con comme un balai
-con comme un manche
-con comme une chaise
-con comme une valise
-con comme une valise à poignée intérieure
-con comme une valise sans poignée
 conasse
 conchier
 Conchita
@@ -115,7 +78,7 @@ connasse
 connaud
 conspirationniste
 contracibête
-couille molle
+couille
 counifle
 courtaud
 courtaude
@@ -127,7 +90,6 @@ crotté
 crouïa
 crouillat
 crouille
-croûton
 dago
 débile
 débougnouliser
@@ -149,19 +111,11 @@ empafé
 empaffé
 empapaouté
 enculé
-enculé de ta race
 enculer
-enfant de fusil
-enfant de garce
-enfant de putain
-enfant de pute
-enfant de salaud
 enflure
 enfoiré
 envaselineur
-envoyer faire foutre
-épais
-espèce de
+foutre
 espingoin
 espingouin
 étron
@@ -170,9 +124,9 @@ face de craie
 face de pet
 face de rat
 fachiste
-FDP
+fdp
 fell
-fermer sa gueule
+gueule
 fils de bâtard
 fils de chien
 fils de chienne
@@ -187,17 +141,313 @@ foutriquet
 fripouille
 frisé
 fritz
-Fritz
 fumelard
-fumier
-garage à bite
-garage à bites
 garce
 gaupe
 GDM
 gestapette
-Gestapette
 gland
 pute
+putes
 salope
-***
+glandeur
+glandeuse
+glandouillou
+glandu
+glandue
+gnoul
+gnoule
+Godon
+gogol
+gogole
+gogolito
+goï
+gook
+gouilland
+gouine
+goulou-goulou
+gourdasse
+gourgandine
+grognasse
+gueniche
+guide de merde
+guindoule
+gwer
+blanbec
+babtou
+halouf
+imbécile
+incapable
+islamo-gauchisme
+islamo-gauchiste
+islamogauchisteJ
+jean-foutre
+jean-fesse
+jeannette
+journalope
+judéo-bellicisme
+judéo-belliciste
+judéo-bolchévisme
+judéobellicisme
+judéobelliciste
+juivaillon
+karlouche
+kawish
+khel
+Khmer rose
+Khmer rouge
+Khmer vert
+kikoo
+kikou
+koreaboo
+Kraut
+krouia
+kung flu
+la fermer
+lâche
+lâcheux
+lavette
+loche
+lopette
+lorpidon
+lourpidon
+macaroni
+magot
+makoumé
+mal blanchi
+mange-merde
+manger du nègre
+manger ses morts
+mange tes mort
+mangez vos morts
+mange tes morts
+obono
+mangeux de marde
+marchandot
+margouilliste
+marlouf
+marsouin
+marsouine
+mauviette
+maya
+mercon
+merdaille
+merdaillon
+merde
+merdeuse
+merdeux
+merdouillard
+michto
+minable
+minus
+misérable
+moinaille
+moins-que-rien
+monacaille
+mongol
+mongol à batteries
+moricaud
+mort aux vaches
+morue
+moule à gaufres
+moule à merde
+mouloud
+muzz
+naze
+nazi
+ndepso
+nèg
+négraille
+nègre
+negre
+negro
+negraille
+negresse
+negrier
+nègre d’Océanie
+négresse
+négro
+newfie
+nez de bœuf
+niac
+niafou
+niaiseux
+niakoué
+nique sa mère
+nique ta mère
+niquer sa mère
+niquez vos mères
+niquer
+niquer sa mère
+niquer sa reum
+niquez votre mère
+nodocéphale
+nœud
+noob
+nord-phocéen
+ntm
+ntr
+orchidoclaste
+ordure
+ortho
+sale juif
+sale musulman
+sale chrétien
+sale protestant
+sale homosexuel
+sale noir
+sale blanc
+sale jaune
+sale chinois
+sale africain
+sale francais
+sale migrant
+sale etranger
+pakos
+panoufle
+patarin
+pd
+peau
+peau d’hareng
+peau de couille
+peau de fesse
+peau de vache
+pecque
+pédale
+pédé
+pédoque
+pelle à merde
+péquenaud
+personnage de comédie
+petite bite
+petite merde
+pignouf
+pignoufe
+pisser à la raie
+pissou
+pithécanthrope
+pleutre
+plouc
+pochard
+porcas
+porcasse
+pot de merde
+pouf
+pouffiasse
+poufiasse
+poundé
+pourriture
+punaise
+putain
+putain de ta race
+pute
+pute borgne
+putois
+raclure
+raclure de bidet
+radoteur
+raté
+ratée
+résidu de capote
+résidu de fausse couche
+retourne aux asperges
+ripopée
+robespierrot
+roi des cons
+roi nègre
+rond de chiotte
+rosbif
+roulure
+sac à foutre
+sac à merde
+sac à papier
+sagouin
+sagouine
+salaud
+salaude
+sale
+salop
+salope
+sans-couilles
+satrouille
+sauvagesse
+schbeb
+schlague
+schleu
+Schleu
+Schleue
+schnock
+schnoque
+sent-la-pisse
+sidi
+social-traître
+sottiseux
+sous-merde
+stéarique
+ta bouche
+ta gueule
+ta mère
+ta mère la pute
+ta race
+ta yeule
+tache
+tafiole
+tantouserie
+tantouze
+tapette
+tapettitude
+tarlouze
+tchoutche
+tebé
+tête carrée
+tête de boche
+tête de cochon
+tête de con
+tête de gland
+tête de linotte
+tête de mort
+tête de mule
+tête de nœud
+tête de veau
+téteux
+teub
+teubé
+Thénardier
+tocard
+tonnerre
+traînée
+travail d’Arabe
+travailler comme un nègre
+triple buse
+trou de cul
+trou du cul
+trouduc
+truiasse
+truie
+va te faire foutre
+va te faire une soupe d’esques
+vaurien
+vaurienne
+vert-de-gris
+vide-couilles
+viédase
+vieille conne
+vier
+vieux
+vieux blanc
+vieux con
+vipère lubrique
+visage à deux faces
+weeaboo
+xéropineur
+y’a bon
+youd
+youp
+youpin
+youpine
+youpinisation
+youpiniser
+youtre
+zemel
+zguègue
+zoulette
