@@ -11,6 +11,10 @@ from projet_w2.credentials import *
 
 
 def collect(word, language="fr", nb=100):
+    """
+    entrée: mot à rechercher, chaine de caractères
+    sortie: objet tweepy qui contient tous les tweets
+    """
     connexion = twitter_setup()
     tweets = connexion.search_tweets(word, lang=language, count=nb)
     return tweets
@@ -18,6 +22,10 @@ def collect(word, language="fr", nb=100):
 
 # Collecte des données users (USERS)
 def collect_by_user(user_name, nb=100):
+    """
+    entrée: nom d'utilisateur de la personne recherchée. ATTENTION, il s'agit du nom précédé par @ sous le nom du compte twitter
+    sortie: objet tweepy qui contient tous les tweets
+    """
     connexion = twitter_setup()
     tweets = connexion.user_timeline(screen_name=user_name, count=nb)
     return tweets
@@ -50,6 +58,10 @@ class IDPrinter(tweepy.StreamingClient):
 
 
 def collect_by_streaming(mot_clef):
+    """
+    entrée: mot_clef à rechercher, chaine de carcatères sous forme de str
+    sortie: flux de tweets continu (stream)
+    """
     printer = IDPrinter(BEARER_TOKEN)
 
     # Clean up pre existing rules
@@ -79,10 +91,8 @@ file_path_2 = './projet_w2/InsultBlock/tweets_collect/twitter_candidate_data/has
 def get_queries(candidate_name):
     """
     Generate and return a list of string queries for the search Twitter API from the file file_path_num_candidate.txt
-    num_candidate: the number of the candidate
-    file_path: the path to the keyword and hashtag files
-
-    return: (list) a list of string queries that can be done to the search API independently
+    entrée: nom du candidat (après le @ dans le profil twitter) en chaine de caractères (str)
+    sortie: une liste de queries (string) qui peuvent être utilisées par l'API tweepy
     """
     queries = []
     with open(file_path_1, 'r', encoding='utf-8') as f:
@@ -118,6 +128,10 @@ def get_tweets_queries(queries, number=100):
 
 
 def get_tweets_postedby(candidate_name, number=100):
+    """
+    entrée: chaine de caractère, prend le nom d'utilisateur de la personne (le nom après @ dans le prfil tweeter)
+    sortie: liste de tweets (objets tweepy)
+    """
     T = []
     tweets = collect_by_user(candidate_name, number)
     for tweet in tweets:
@@ -128,6 +142,10 @@ def get_tweets_postedby(candidate_name, number=100):
 
 
 def get_retweets(candidate_name):
+    """
+    entrée: chaine de caractère, prend le nom d'utilisateur de la personne (le nom après @ dans le prfil tweeter)
+    sortie: N entier, nombre total de retweets cumulés sur tous les tweets
+    """
     L = []
     tweets = collect_by_user(candidate_name)
     print(tweets)
@@ -140,6 +158,10 @@ def get_retweets(candidate_name):
 # Réponses à un tweet:
 
 def get_response(twit_id, user_name):
+    """
+    entrée: id du tweet ATTENTION en str, nom d'utilisateur de l'user qui a posté ce tweet en str
+    sortie: ensemble des réponses au tweet dont l'id a été rentré (objet tweepy)
+    """
     rep = []
     api = twitter_setup()
     tweets = tweepy.Cursor(
@@ -208,8 +230,8 @@ def test_get_retweets():
 if __name__ == '__main__':
     # collect_by_streaming("ethereum")
 
-    #T = collect_by_user("GravereauxDev")
+    # T = collect_by_user("GravereauxDev")
     # print(T[0])
-    #R = get_response(T[0].id, "GravereauxDev")
+    # R = get_response(T[0].id, "GravereauxDev")
 
     print("ok")

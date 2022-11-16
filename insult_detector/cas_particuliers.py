@@ -8,7 +8,9 @@ voyelles = 'aeiouy'
 
 def creation_liste(nom_fichier):
     """
-    Crée une liste d'insultes à partir de insult.txt
+    Crée une liste d'insultes
+    Entrée: insult.txt
+    Sortie: liste de string (insultes)
     """
     with open(chemin + nom_fichier, 'r') as fichier:
         insultes = list(fichier.read().splitlines())
@@ -19,6 +21,8 @@ def nettoyage_texte(text):
     """
     remplace les caractères d'imitation
     supprime les voyelles redoublées qui trompent la liste
+    entrée: chaine de caractère/string
+    sortie: chaine de caractère épurée
     """
     # Remplacement des caractères d'imitation comme 0 par o ou 3 par e
     for i in remplacement.keys():

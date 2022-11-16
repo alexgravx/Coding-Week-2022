@@ -10,7 +10,7 @@ def twitter_setup():
     """
     Utility function to setup the Twitter's API
     with an access keys provided in a file credentials.py
-    :return: the authentified API
+    sortie: l'objet authentified API
     """
 
     # Authentication and access using keys:
