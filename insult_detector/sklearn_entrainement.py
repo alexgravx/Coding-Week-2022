@@ -18,23 +18,21 @@ from sklearn.datasets import load_files
 
 # dataset
 
-
 def creation_dataset(nom_fichier):
     """
     entree: nom du fichier .csv en chaine de caractères (str)
-    sortie:
-    X pour les données (type pandas.Series)
-    y pour les labels = objectifs de valeurs à atteindre: 1 si insulte et 0 sinon) (type pandas.Series)
+    sortie: X_data pour les données (type pandas.Series), y_data (type pandas.Series) pour les objectifs de valeurs à atteindre: 1 si insulte et 0 sinon
     """
     data = pandas.read_csv(
         '/Users/alexandregravereaux/Desktop/CW/projet_w2/InsultBlock/insult_detector/train_data/' + nom_fichier, sep=',')
     data = data[['tweet', 'label']][:1000]
     X_data = data['tweet']
-    y = data['label']
-    return (X_data, y)
+    y_data = data['label']
+    return (X_data, y_data)
 
 
 ## Preprocessing ##
+
 vectorizer = CountVectorizer(
     max_features=1500, min_df=5, max_df=0.7, stop_words=stopwords.words('english'))
 tfidfconverter = TfidfTransformer()
@@ -42,75 +40,75 @@ tfidfconverter = TfidfTransformer()
 
 def preprocessing(X_data):
     """
-    entrée: pandas.Series qui regroupe l'ensemble des tweets classés dans le même ordre que leur label dans y
-    sortie: documents est une liste des tweets lemmatizés et classés selon le même ordre qu'au début
+    entrée: pandas.Series qui regroupe l'ensemble des tweets classés dans le même ordre que leur labels dans y_data;
+    sortie: L_tweets est une liste des tweets lemmatizés et classés selon le même ordre qu'au début;
     """
 
-    documents = []
+    L_tweets = []
     stemmer = WordNetLemmatizer()
 
-    for sen in range(0, len(X_data)):
+    for i in range(0, len(X_data)):
         # Remove all the special characters
-        document = re.sub(r'\W', ' ', str(X_data[sen]))
+        tweet = re.sub(r'\W', ' ', str(X_data[i]))
         # remove all single characters
-        document = re.sub(r'\s+[a-zA-Z]\s+', ' ', document)
+        tweet = re.sub(r'\s+[a-zA-Z]\s+', ' ', tweet)
         # Remove single characters from the start
-        document = re.sub(r'\^[a-zA-Z]\s+', ' ', document)
+        tweet = re.sub(r'\^[a-zA-Z]\s+', ' ', tweet)
         # Substituting multiple spaces with single space
-        document = re.sub(r'\s+', ' ', document, flags=re.I)
+        tweet = re.sub(r'\s+', ' ', tweet, flags=re.I)
         # Removing prefixed 'b' (cas lecture des documents)
-        document = re.sub(r'^b\s+', '', document)
+        tweet = re.sub(r'^b\s+', '', tweet)
         # Converting to Lowercase
-        document = document.lower()
+        tweet = tweet.lower()
         # Lemmatization
-        document = document.split()
-        document = [stemmer.lemmatize(word) for word in document]
-        document = ' '.join(document)
-        documents.append(document)
-    return documents
+        tweet = tweet.split()
+        tweet = [stemmer.lemmatize(word) for word in tweet]
+        tweet = ' '.join(tweet)
+        L_tweets.append(tweet)
+    return L_tweets
 
 ## Creation du modèle de ML ##
 
 
-def conversion_sklearn(documents, min_tweet=5, max_tweet=0.7):
+def conversion_sklearn_fit_transform(L_tweets):
     """
     entrée: documents, liste des tweets lemmatizés et classés selon le même ordre qu'au début;
     sortie: X, tableau numpy np.ndarray converti pour sklearn (tableaux de nombres);
     """
     # Tri des données en mots et passage en forme lisible par l'algorithme
-    X = vectorizer.fit_transform(documents).toarray()
+    X_convert = vectorizer.fit_transform(L_tweets).toarray()
 
     # Analyse TFIDF for "Term frequency" and "Inverse Tweet Frequency"
     # Term frequency = (Number of Occurrences of a word)/(Total words in the document)
     # IDF(word) = Log((Total number of documents)/(Number of documents containing the word))
     # Cela permet de jauger entre la forte présence d'un mot dans un document par rapport à sa forte présence dans l'ensemble des documents
-    X = tfidfconverter.fit_transform(X).toarray()
-    return X
+    X_convert = tfidfconverter.fit_transform(X_convert).toarray()
+    return X_convert
 
 
-def conversion_sklearn_2(documents, vectorizer, tfidfconverter):
+def conversion_sklearn_transform(L_tweets, vectorizer, tfidfconverter):
     """
     entrée: documents, liste des tweets lemmatizés et classés selon le même ordre qu'au début;
     sortie: X, tableau numpy np.ndarray converti pour sklearn (tableaux de nombres);
     """
     # Tri des données en mots et passage en forme lisible par l'algorithme
-    X = vectorizer.transform(documents).toarray()
+    X_convert = vectorizer.transform(L_tweets).toarray()
 
     # Analyse TFIDF for "Term frequency" and "Inverse Tweet Frequency"
     # Term frequency = (Number of Occurrences of a word)/(Total words in the document)
     # IDF(word) = Log((Total number of documents)/(Number of documents containing the word))
-    X = tfidfconverter.transform(X).toarray()
-    return X
+    X_convert = tfidfconverter.transform(X_convert).toarray()
+    return X_convert
 
 
-def decoupage_dataset(X, y):
+def decoupage_dataset(X_convert, y_data):
     """
     Réparition des données dans un set d'entrainement et un set de test pour vérifier l'efficacité du modèle
     entrée: X, np.ndarray fourni par la fonction conversion_sklearn; y, pandas.Series des labels (valeurs 0 ou 1) et indique si les tweets sont insultants(1) ou non (0)
     sortie: X et y découpés chacun un deux sous tableaux numpy et pandas.Series (respectivempent) d'entrainement et de test
     """
     X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.2, random_state=0)
+        X_convert, y_data, test_size=0.2, random_state=0)
     return (X_train, X_test, y_train, y_test)
 
 
@@ -129,32 +127,32 @@ def entrainement_modele(X_train, y_train):
 ## Tests ##
 
 def test_creation_dataframe():
-    X_data, y = creation_dataset('train.csv')
+    X_data, y_data = creation_dataset('train.csv')
     assert type(X_data) == pandas.Series
-    assert type(y) == pandas.Series
-    assert 0 in y
-    assert 1 in y
+    assert type(y_data) == pandas.Series
+    assert 0 in y_data
+    assert 1 in y_data
 
 
 def test_preprocessing():
-    X_data, y = creation_dataset('train.csv')
-    documents = preprocessing(X_data)
-    assert type(documents) == list
-    assert type(documents[0]) == str
+    X_data, y_data = creation_dataset('train.csv')
+    L_tweets = preprocessing(X_data)
+    assert type(L_tweets) == list
+    assert type(L_tweets[0]) == str
 
 
 def test_conversion_sklearn():
-    X_data, y = creation_dataset('train.csv')
-    documents = preprocessing(X_data)
-    X = conversion_sklearn(documents)
-    assert type(X) == np.ndarray
+    X_data, y_data = creation_dataset('train.csv')
+    L_tweets = preprocessing(X_data)
+    X_convert = conversion_sklearn_fit_transform(L_tweets)
+    assert type(X_convert) == np.ndarray
 
 
 def test_decoupage():
-    X_data, y = creation_dataset('train.csv')
-    documents = preprocessing(X_data)
-    X = conversion_sklearn(documents)
-    X_train, X_test, y_train, y_test = decoupage_dataset(X, y)
+    X_data, y_data = creation_dataset('train.csv')
+    L_tweets = preprocessing(X_data)
+    X_convert = conversion_sklearn_fit_transform(L_tweets)
+    X_train, X_test, y_train, y_test = decoupage_dataset(X_convert, y_data)
     assert type(X_train) == np.ndarray
     assert type(X_test) == np.ndarray
     assert type(y_train) == pandas.Series
@@ -167,20 +165,20 @@ if __name__ == '__main__':
 
     # Creation du modèle de ML
     print("*Creation du dataset en cours* \n")
-    X, y = creation_dataset('train.csv')
+    X_data, y_data = creation_dataset('train.csv')
     print("*Preprocessing en cours* \n")
-    documents = preprocessing(X)
+    L_tweets = preprocessing(X_data)
     print("*Creation du modèle en cours* \n")
-    X = conversion_sklearn(documents, vectorizer, tfidfconverter)
-    #X_train, X_test, y_train, y_test = decoupage_dataset(X, y)
-    classifier = entrainement_modele(X, y)
-    #y_pred = classifier.predict(X_test)
-    """
+    X_convert = conversion_sklearn_fit_transform(L_tweets)
+    X_train, X_test, y_train, y_test = decoupage_dataset(X_convert, y_data)
+    classifier = entrainement_modele(X_train, y_train)
+    y_pred = classifier.predict(X_test)
+
     # Affichage des matrices d'efficacité du modèle
     print(confusion_matrix(y_test, y_pred))
     print(classification_report(y_test, y_pred))
     print(accuracy_score(y_test, y_pred))
-    """
+
     # Sauvegarde dy modèle
     with open('/Users/alexandregravereaux/Desktop/CW/projet_w2/InsultBlock/insult_detector/train_data/text_classifier', 'wb') as picklefile:
         pickle.dump((classifier, vectorizer, tfidfconverter), picklefile)

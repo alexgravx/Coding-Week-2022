@@ -1,7 +1,6 @@
 ## Importations ##
 
 import pickle
-import pandas as pd
 import numpy as np
 from projet_w2.InsultBlock.insult_detector.sklearn_entrainement import *
 
@@ -12,27 +11,26 @@ X_data, y = creation_dataset('train2.csv')
 
 def chargement(nom_modele):
     """
-    charge le modèle dans la variable "model"
+    charge le modèle de ML entraîné précédemment
     entrée: nom du modèle de machine learning (str)
-    sortie: modèle de machine learning (objet RandomForest)
+    sortie: objets ML: modèle, réduction en vecteur et fréquencisation dans les variables "model", 'vectorizer" et "tfidfconverter"
     """
     with open('/Users/alexandregravereaux/Desktop/CW/projet_w2/InsultBlock/insult_detector/train_data/' + nom_modele, 'rb') as training_model:
         model, vectorizer, tfidfconverter = pickle.load(training_model)
-
     return model, vectorizer, tfidfconverter
 
 
 def detecteur_v3(X_data, model, vectorizer, tfidfconverter):
     """
-    détecte si un tweet est une insulte ou non
-    entrée: chaine de caractère/str qui correspond au tweet, model RandomForest ou autre de ML
-    sortie: 1 si c'est haineux, 0 sinon
+    détecte si un set de tweets sont des insultes ou non;
+    entrée: X_data, pandas.Series de tweets (chaine de caractère/str), model RandomForest entraîné, et 2 objets sklearn
+    sortie: np.ndarray tq 1 pour les tweets haineux, 0 sinon (ordre conservé);
     """
-    L = preprocessing(X_data)
-    X_test = conversion_sklearn_2(L, vectorizer, tfidfconverter)
-    X_test = X_test
-    b = model.predict(X_test)
-    return b
+    L_Tweets = preprocessing(X_data)
+    X_convert = conversion_sklearn_transform(
+        L_Tweets, vectorizer, tfidfconverter)
+    y_result = model.predict(X_convert)
+    return y_result
 
 ## Tests ##
 
@@ -52,6 +50,5 @@ def test_detecteur_v3():
 
 if __name__ == '__main__':
     model, vectorizer, tfidfconverter = chargement('text_classifier')
-    b = detecteur_v3(X_data, model, vectorizer, tfidfconverter)
-    print(b)
-    print(np.where(b == 1))
+    y_result = detecteur_v3(X_data, model, vectorizer, tfidfconverter)
+    print(np.where(y == 1))
