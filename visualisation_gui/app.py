@@ -11,7 +11,7 @@ app = Dash(__name__)
 # see https://plotly.com/python/px-arguments/ for more options
 
 # Fonction qui détermine la polarité d'un twwet
-data = to_dataframe('data_EmmanuelMacron.json')
+data = to_dataframe('data_EmmanuelMacron_agriculture.json')
 
 
 def pol(twindex):

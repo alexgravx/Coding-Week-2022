@@ -43,4 +43,4 @@ def test_main_subject():
 
 
 if __name__ == '__main__':
-    data = main_subject("cryptommonnaies")
+    data = main_user("sandrousseau", 300)

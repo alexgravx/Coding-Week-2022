@@ -191,17 +191,32 @@ def det_insultes(txt, lang):
 
     return ins
 
+
+def detecteur_v1(insulte, lang='fr'):
+    """str en entrée // bool en sortie
+    Renvoyer True si le groupe de mot est une insulte
+    Renvoyer False si le groupe de mot n'est pas une insulte"""
+
+    return (det_insultes(insulte, lang) != [])
+
+
 ## TESTS ##
 
 
 def test_texte_insultes():
     texte_fr = "Bjr mesdames, messieurs !\n je m'appelle hugues et j'aime pas les bougnouls et les fils de pute"
     texte_en = "During this scene, I was hungry. Fuck you, i don't like bitches"  # v1 en anglais
-    print(det_insultes(texte_fr, 'fr'))
-    print(det_insultes(texte_en, 'en'))
+
+    # Tests pour la fonction det_insultes
     assert set(det_insultes(texte_en, 'en')) == set(['fuck', 'bitch'])
     assert set(det_insultes(texte_fr, 'fr')) == set(
         [stemmer.stem('bougnouls'), stemmer.stem('pute')])
+
+    # Tests pour la fonction detecteur_V1
+    assert detecteur_v1("pute", "fr") == True
+    assert detecteur_v1("bonjour", "fr") == False
+    assert detecteur_v1("shit", "en") == True
+    assert detecteur_v1("hello", "en") == False
 
 
 if __name__ == "__main__":

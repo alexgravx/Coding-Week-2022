@@ -1,14 +1,18 @@
 ## Importations ##
 
+# Modules
 from projet_w2.InsultBlock.insult_detector.detecteur_v1 import detecteur_v1
 from projet_w2.InsultBlock.tweets_collect.to_dataframe import *
 
-## Fonctions ##
 
 # Import dataframe
-
-data = to_dataframe('data_EmmanuelMacron_agriculture.json')
+data = to_dataframe('data_missile.json')
 data = epuration_dataframe(data)
+
+data_user = to_dataframe('data_sandrousseau.json')
+data_user = epuration_dataframe(data_user)
+
+## Fonctions ##
 
 
 def ajout_colonnes(data):
@@ -25,18 +29,36 @@ def ajout_colonnes(data):
     return data
 
 
-def stats_global(data):
-    """
-    # Analyse d'opinion de la plateforme. Nombres tweets qui sont des insultes et nombre qui le sont pas.
-    """
-    pos_twitts = len(data[data['insult'] == False].index)
-    neg_twitts = len(data[data['insult'] == True].index)
+data = ajout_colonnes(data)
+data_user = ajout_colonnes(data_user)
 
-# Nombre d'insultes par jour
+
+def nb_insultes(data):
+    """
+    Analyse d'opinion de la plateforme.
+    entrée: dataframe pandas data
+    sortie: nombres tweets qui sont des insultes et nombre qui le sont pas type int
+    """
+    pas_insultes = len(data[data['insult'] == False].index)
+    insultes = len(data[data['insult'] == True].index)
+    total = pas_insultes + insultes
+    percentage = insultes/total
+    return (insultes, total, percentage)
+
+
+def drop_duplicate(L):
+    """
+    Supprime les doublons de L
+    """
+    return list(set(L))
 
 
 def insult_jour(data):
-    jours = data['jour'].values()
+    """
+    entrée: dataframe pandas data
+    sortie: nombres moyen d'insultes par jour dans le dataframe (float)
+    """
+    jours = drop_duplicate(data['jour'].values)
     nb_jours = len(jours)
     insulte = 0
     for jour in jours:
@@ -44,11 +66,13 @@ def insult_jour(data):
     moy = insulte/nb_jours
     return moy
 
-# Nombre d'insultes par heure
-
 
 def insult_heure(data):
-    heures = data['heure'].values()
+    """
+    entrée: dataframe pandas data
+    sortie: nombres moyen d'insultes par heure dans le dataframe (float)
+    """
+    heures = drop_duplicate(data['heure'].values)
     nb_heures = len(heures)
     insulte = 0
     for heure in heures:
@@ -56,12 +80,58 @@ def insult_heure(data):
     moy = insulte/nb_heures
     return moy
 
+
 # Statistiques par utilisateur
 
 
-def insult_user(data):
-    user = data['user.screen_name'].values()
-    nb_users = len(user)
+def nb_user_insult(user_data):
+    """
+    entrée: dataframe des tweets d'un seul utilisateur
+    sortie: nombre d'insultes total de l'user (int) + nb insultes moyen par jour (float)
+    """
+    nb_insultes = sum(user_data['insult'])
+    moy_jour = insult_jour(user_data)
+    return (nb_insultes, moy_jour)
+
+
+def moy_insult_user(data):
+    """
+    entrée: dataframe des tweets
+    sortie: nb d'insultes moy/heure/user, nb insultes moy/jour/user
+    """
+    users = drop_duplicate(data['user.screen_name'].values)
+    nb_users = len(users)
+    moy_user = nb_insultes(data)[0]/nb_users
     moy_jour = insult_jour(data)
     moy_heure = insult_heure(data)
-    return (moy_heure/nb_users, moy_jour/nb_users)
+    return (moy_user, moy_heure/nb_users, moy_jour/nb_users)
+
+
+def max_insultes(data):
+    users = drop_duplicate(data['user.screen_name'].values)
+    insulte_max = 0
+    for user in users:
+        nb_insulte = len(data[data['user.screen_name'] == user].index)
+        if nb_insulte > insulte_max:
+            insulte_max = nb_insulte
+    return insulte_max
+
+
+## Tests ##
+
+def test_nb_insultes():
+    nb_insultes = nb_insultes(data)
+    assert type(nb_insultes) == int
+
+
+def test_insult_jour():
+    moy = insult_jour(data)
+    assert type(moy) == float
+
+
+def test_max_insultes():
+    moy = moy_insult_user(data)
+    max = max_insultes(data)
+    assert type(moy) == float
+    assert type(max) == int
+    assert max >= moy
