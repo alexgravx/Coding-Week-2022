@@ -19,4 +19,5 @@ data_twitter = to_dataframe('data_missile.json')
 fig = px.scatter(data_twitter, x="user.followers_count", y="favorite_count",
                  size="retweet_count", color="user.verified", size_max=50)
 
-layout = html.Div([dcc.Graph(figure=fig)])
+layout = html.Div(
+    [dcc.Graph(figure=fig, style={'width': '70%', 'display': 'inline-block', 'float': 'right'})])

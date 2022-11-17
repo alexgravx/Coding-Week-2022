@@ -52,33 +52,9 @@ content = html.Div(id="page-content", children=[], style=CONTENT_STYLE)
 app.layout = html.Div([
     dcc.Location(id="url"),
     sidebar,
-    content
+    content,
+    dash.page_container
 ])
-
-
-@app.callback(
-    Output("page-content", "children"),
-    [Input("url", "pathname")])
-def render_page_content(pathname):
-    if pathname == "/":
-        return [
-            html.H1('Dashboard',
-                    style={'textAlign': 'center'}),
-
-        ]
-    elif pathname == "/subject":
-        return [
-            html.H1('Insulte par thème',
-                    style={'textAlign': 'center'}),
-
-        ]
-    elif pathname == "/user":
-        return [
-            html.H1('Insulte par utilisateur',
-                    style={'textAlign': 'center'}),
-            # dcc.Graph(id='life-exp-vs-gdp', figure=fig1)
-
-        ]
 
 
 if __name__ == '__main__':

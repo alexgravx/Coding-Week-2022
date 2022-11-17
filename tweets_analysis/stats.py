@@ -81,6 +81,16 @@ def insult_heure(data):
     return moy
 
 
+def max_insultes(data):
+    users = drop_duplicate(data['user.screen_name'].values)
+    insulte_max = 0
+    for user in users:
+        nb_insulte = len(data[data['user.screen_name'] == user].index)
+        if nb_insulte > insulte_max:
+            insulte_max = nb_insulte
+    return insulte_max
+
+
 # Statistiques par utilisateur
 
 
@@ -105,16 +115,6 @@ def moy_insult_user(data):
     moy_jour = insult_jour(data)
     moy_heure = insult_heure(data)
     return (moy_user, moy_heure/nb_users, moy_jour/nb_users)
-
-
-def max_insultes(data):
-    users = drop_duplicate(data['user.screen_name'].values)
-    insulte_max = 0
-    for user in users:
-        nb_insulte = len(data[data['user.screen_name'] == user].index)
-        if nb_insulte > insulte_max:
-            insulte_max = nb_insulte
-    return insulte_max
 
 
 ## Tests ##

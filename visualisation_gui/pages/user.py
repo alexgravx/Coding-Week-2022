@@ -13,4 +13,5 @@ dash.register_page(__name__, path="/subject",
                    title='Insultes par sujet', name='subject')
 
 
-layout = html.Div(id="page-content", children=[])
+layout = html.Div(id="page-content",
+                  children=[html.H2("DASHBOARD", style={'textAlign': 'center'})])

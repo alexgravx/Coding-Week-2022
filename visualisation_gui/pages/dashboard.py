@@ -13,4 +13,5 @@ dash.register_page(__name__, path='/', title='Accueil',
                    name='accueil', order=0)
 
 
-layout = html.Div(id="page-content", children=[])
+layout = html.Div(id="page-content",
+                  children=[html.H2("DASHBOARD", style={'textAlign': 'center'})])
