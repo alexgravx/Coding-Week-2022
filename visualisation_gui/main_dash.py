@@ -7,12 +7,9 @@ from dash import dcc
 import plotly.express as px
 from dash.dependencies import Input, Output
 import pandas as pd
-# from projet_w2.InsultBlock.visualisation_gui.app import fig, fig1
 
-df = pd.read_csv(
-    'https://raw.githubusercontent.com/Coding-with-Adam/Dash-by-Plotly/master/Bootstrap/Side-Bar/iranian_students.csv')
-
-app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
+app = dash.Dash(__name__, use_pages=True,
+                external_stylesheets=[dbc.themes.BOOTSTRAP])
 
 # styling the sidebar
 SIDEBAR_STYLE = {
