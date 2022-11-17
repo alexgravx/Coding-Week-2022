@@ -14,10 +14,7 @@ Logo_src = "./projet_w2/InsultBlock/visualisation_gui/Logo.png"
 encoded_image = base64.b64encode(open(Logo_src, 'rb').read())
 
 
-app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP])
-# try running the app with one of the Bootswatch themes e.g.
-# app = dash.Dash(external_stylesheets=[dbc.themes.JOURNAL])
-# app = dash.Dash(external_stylesheets=[dbc.themes.SKETCHY])
+app = dash.Dash(external_stylesheets=[dbc.themes.DARKLY])
 
 
 nav_item1 = dbc.NavItem(dbc.NavLink("Dashboard", href="#"))

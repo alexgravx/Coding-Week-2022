@@ -17,7 +17,7 @@ dictionnaire_inutile = dictionnaire_inutile_en.union(dictionnaire_inutile_fr)
 
 # Dictionnaire des mots abrégés
 dictionnaire_jargon_fr = [("mrc", "merci"), ("bjr", "bonjour"), ("dr", "derien"), (
-    "tlmt", "tellement"), ("jsp", "je sais pas"), ("cad", "c est à dire"), ("càd", "c est à dire")]
+    "tlmt", "tellement"), ("jsp", "je sais pas"), ("cad", "c est à dire"), ("càd", "c est à dire"), ("ptn", "putain")]
 
 # Dictionnaire des insultes
 dictionnaire_insultes_en = {"fuck", "shit", "bullshit", "bollocks", "crap", "damn", "goddamn", "dumb", "bastard", "scumbag", "cunt", "pussy", "twat", "ass", "arse", "asshole", "arsehole", "asshat",
@@ -26,10 +26,15 @@ dictionnaire_insultes_en = {"fuck", "shit", "bullshit", "bollocks", "crap", "dam
 with open(chemin + 'insult.txt', 'r') as fichier:
     l = fichier.read().splitlines()
 
-m = [stemmer.stem(i) for i in l]
-dictionnaire_insultes_fr = set(m)
+global dic_base
+dic_base = [i for i in l]
 
-# dictionnaire_insulte = dictionnaire_insultes_en.union(dictionnaire_insultes_fr)
+m = [stemmer.stem(i) for i in l]
+
+global dic_base_radical
+dic_base_radical = [stemmer.stem(i) for i in l]
+
+dictionnaire_insultes_fr = set(m)
 
 ## FONCTIONS NETTOYAGE ##
 
@@ -39,30 +44,14 @@ def nettoyage(txt):
     Enlever ponctuation, sauts de lignes, caractères spéciaux"""
 
     # On enlève les caractères spéciaux
-
     s = ""
-
     for j in txt:
-
         if (j.isalpha() or j.isspace()):
             s += j.lower()
 
-        elif j == "'":
-            s += ' '
-
     # On enlève les sauts de ligne
-
-    b = s.replace('\n', '').split(' ')
-    c = []
-
-    for i in b:
-
-        if i != "":
-            c.append(i)
-
-    d = ' '.join(c)
-
-    return d
+    b = s.replace('\n', '')
+    return b
 
 
 def nettoyage_semantique(txt):
@@ -71,7 +60,6 @@ def nettoyage_semantique(txt):
     Remplacer le jargon"""
 
     # On fait les deux en même temps
-
     b = txt.split(' ')
     di = dictionnaire_inutile
     dj = dictionnaire_jargon_fr
@@ -80,19 +68,14 @@ def nettoyage_semantique(txt):
 
     for i in b:
         a = True
-
         for j in range(len(dj)):
-
             if i == dj[j][0]:
                 n = dj[j][1]
-
                 if i not in di:
                     a = False
                     m.append(n)
-
         if a == True:
             m.append(i)
-
     return m
 
 # TextBlob : lemmatisation des mots (on radicalise)
@@ -103,37 +86,22 @@ def lemmatization(m, lang):
     Lemmatisation des mots avec TextBlob (on prend le radical)"""
 
     # On commence par lemmatiser (les noms, adjectifs, verbes en passant tout les mots au singulier avant)
-
     l = []
-
     for i in m:
-        mot = TextBlob(i)
-        a = Word(mot)
-        b = mot.tags[0][1]
-
-        if b in ('NN', 'VBD', 'VB', 'JJ', 'NNS', 'VBZ'):
-            l.append(choisir_dic_et_txtblb(lang, mot, mot.tags[0][1])[1])
-            # Word(mot.words.singularize()[
-            #        0]).lemma(mot.tags[0][1]))
-
-        else:
-            l.append(i)
+        if i.isalpha():
+            mot = TextBlob(i)
+            a = Word(mot)
+            b = mot.tags[0][1]
+            if b in ('NN', 'VBD', 'VB', 'JJ', 'NNS', 'VBZ'):
+                l.append(choisir_dic_et_txtblb(lang, mot, mot.tags[0][1])[1])
+            else:
+                l.append(i)
 
     # On a des problèmes de type. On change le type des mots TextBlob
-
     for i in range(len(l)):
-
         if type(l[i]) == type(TextBlob(Word('word'))):
             l[i] = l[i].tags[0][0]
-
     return l
-
-
-def nettoyage_total(txt, lang):
-    """str en entrée // list en sortie
-    Faire une fonction commune à l'ensemble du nettoyage"""
-
-    return lemmatization(nettoyage_semantique(nettoyage(txt)), lang)
 
 ## FONCTIONS DETECTEUR INSULTES V1 ##
 
@@ -143,10 +111,8 @@ def contains(small, big):
     Renvoyer si une liste est contenue dans une autre (avec l'ordre des mots qui compte)"""
 
     for i in range(1 + len(big) - len(small)):
-
         if small == big[i:i+len(small)]:
             return True
-
     return False
 
 
@@ -157,38 +123,32 @@ def choisir_dic_et_txtblb(lang, mot1=TextBlob('home'), mot1_tag='NN'):
     l = [[dictionnaire_insultes_en, dictionnaire_insultes_fr], ['en', 'fr']]
     m = [[Word(mot1.words.singularize()[0]).lemmatize(
         mot1_tag), stemmer.stem(mot1.tags[0][0])], ['en', 'fr']]
-
     dic_lang = set()
     lem_lang = 0
 
     for j in range(len(l[0])):
-
         if l[1][j] == lang:
-            #print(m[0][0], m[0][1])
             dic_lang = l[0][j]
             lem_lang = m[0][j]
 
     return [dic_lang, lem_lang]
 
 
-def det_insultes(txt, lang):
+def list_insultes(txt, lang):
     """str en entrée // list en sortie
     Renvoyer la liste des insultes dans le texte d'entrée"""
 
-    l = nettoyage_total(txt, lang)
-    b = False
+    l = lemmatization(nettoyage_semantique(nettoyage(txt)), lang)
     ins = []
-    # print(l)
     dic_ins = choisir_dic_et_txtblb(lang)[0]
 
     for i in dic_ins:
-
         if len(i.split(' ')) <= len(l):
-
             if contains(i.split(' '), l):
-                b = True
-                ins.append(i)
-
+                if lang == 'fr':
+                    ins.append(dic_base[dic_base_radical.index(i)])
+                else:
+                    ins.append(i)
     return ins
 
 
@@ -196,9 +156,7 @@ def detecteur_v1(insulte, lang='fr'):
     """str en entrée // bool en sortie
     Renvoyer True si le groupe de mot est une insulte
     Renvoyer False si le groupe de mot n'est pas une insulte"""
-
-    return (det_insultes(insulte, lang) != [])
-
+    return (list_insultes(insulte, lang) != [])
 
 ## TESTS ##
 
@@ -208,9 +166,8 @@ def test_texte_insultes():
     texte_en = "During this scene, I was hungry. Fuck you, i don't like bitches"  # v1 en anglais
 
     # Tests pour la fonction det_insultes
-    assert set(det_insultes(texte_en, 'en')) == set(['fuck', 'bitch'])
-    assert set(det_insultes(texte_fr, 'fr')) == set(
-        [stemmer.stem('bougnouls'), stemmer.stem('pute')])
+    assert set(list_insultes(texte_en, 'en')) == set(['fuck', 'bitch'])
+    assert set(list_insultes(texte_fr, 'fr')) == set('bougnoul', 'pute')
 
     # Tests pour la fonction detecteur_V1
     assert detecteur_v1("pute", "fr") == True
@@ -220,4 +177,4 @@ def test_texte_insultes():
 
 
 if __name__ == "__main__":
-    test_texte_insultes()
+    print(detecteur_v1("La vie est belle"))
