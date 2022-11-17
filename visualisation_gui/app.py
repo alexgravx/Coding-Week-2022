@@ -4,7 +4,7 @@ from dash import Dash, html, dcc
 import plotly.express as px
 import pandas as pd
 from projet_w2.InsultBlock.tweets_collect.to_dataframe import *
-from projet_w2.InsultBlock.insult_detector.detecteur_v1 import *
+from projet_w2.InsultBlock.insult_detector.main_detector import detecteur
 app = Dash(__name__)
 
 # assume you have a "long-form" data frame
@@ -34,7 +34,7 @@ def nb_insultes_par_sysex(sysex):
     for twindex in range(len(data.index)):
         if data['source'][twindex].split(' ')[-1] == sysex:
             texte = data['text'][twindex]
-            L = det_insultes(texte)
+            L = detecteur(texte)
             # print(L)
             i = 0
             lis = lis_sysex()

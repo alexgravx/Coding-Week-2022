@@ -36,13 +36,7 @@ def epuration_dataframe(data_brut):
 
     data_twitter['created_at'] = data_twitter['created_at'].apply(
         lambda x: x[0:19])
-    data_twitter['os'] = data_twitter['source'].split(' ')[-1]
     return data_twitter
-
-
-a = to_dataframe('data_missile.json')
-b = epuration_dataframe(a)
-print(b.head())
 
 
 ## Tests ##
