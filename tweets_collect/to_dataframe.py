@@ -32,11 +32,17 @@ def epuration_dataframe(data_brut):
     Amélioration de la date
     '''
     data_twitter = data_brut[['id', 'created_at', 'favorite_count', 'lang', 'retweet_count', 'text', 'user.id', 'user.name', 'user.screen_name',
-                              'user.created_at', 'user.description', 'user.favourites_count', 'user.followers_count', 'user.friends_count', 'user.location', 'user.verified', 'entities.user_mentions']].copy()
+                              'user.created_at', 'user.description', 'user.favourites_count', 'user.followers_count', 'user.friends_count', 'user.location', 'user.verified', 'entities.user_mentions', 'source']].copy()
 
     data_twitter['created_at'] = data_twitter['created_at'].apply(
         lambda x: x[0:19])
+    data_twitter['os'] = data_twitter['source'].split(' ')[-1]
     return data_twitter
+
+
+a = to_dataframe('data_missile.json')
+b = epuration_dataframe(a)
+print(b.head())
 
 
 ## Tests ##

@@ -19,3 +19,7 @@ def detecteur(text):
 def test_detecteur():
     bool = detecteur('test')
     assert bool != None
+
+
+if __name__ == '__main__':
+    print(detecteur('jk'))
