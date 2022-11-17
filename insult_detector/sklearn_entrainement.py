@@ -24,7 +24,7 @@ def creation_dataset(nom_fichier, debut, fin):
     sortie: X_data pour les données (type pandas.Series), y_data (type pandas.Series) pour les objectifs de valeurs à atteindre: 1 si insulte et 0 sinon
     """
     data = pandas.read_csv(
-        '/Users/alexandregravereaux/Desktop/CW/projet_w2/InsultBlock/insult_detector/train_data/' + nom_fichier, sep=',')
+        './projet_w2/InsultBlock/insult_detector/train_data/' + nom_fichier, sep=',')
     data = data[['tweet', 'label']][debut:fin]
     data.reset_index(inplace=True)
     X_data = data['tweet']
@@ -181,5 +181,5 @@ if __name__ == '__main__':
     print(accuracy_score(y_test, y_pred))
 
     # Sauvegarde dy modèle
-    with open('/Users/alexandregravereaux/Desktop/CW/projet_w2/InsultBlock/insult_detector/train_data/text_classifier', 'wb') as picklefile:
+    with open('./projet_w2/InsultBlock/insult_detector/train_data/text_classifier', 'wb') as picklefile:
         pickle.dump((classifier, vectorizer, tfidfconverter), picklefile)
