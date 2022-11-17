@@ -2,11 +2,12 @@
 
 import pickle
 import numpy as np
+import pandas as pd
 from projet_w2.InsultBlock.insult_detector.sklearn_entrainement import *
 
 ## Fonctions ##
 
-X_data, y = creation_dataset('train2.csv')
+X_data, y = creation_dataset('train2.csv', 0, 500)
 
 
 def chargement(nom_modele):
@@ -20,7 +21,7 @@ def chargement(nom_modele):
     return model, vectorizer, tfidfconverter
 
 
-def detecteur_v3(X_data, model, vectorizer, tfidfconverter):
+def detecteur_ML(X_data, model, vectorizer, tfidfconverter):
     """
     détecte si un set de tweets sont des insultes ou non;
     entrée: X_data, pandas.Series de tweets (chaine de caractère/str), model RandomForest entraîné, et 2 objets sklearn
@@ -32,6 +33,13 @@ def detecteur_v3(X_data, model, vectorizer, tfidfconverter):
     y_result = model.predict(X_convert)
     return y_result
 
+
+def detecteur_v3(text):
+    model, vectorizer, tfidfconverter = chargement('text_classifier')
+    X_data = pd.Series(text)
+    y_result = detecteur_ML(X_data, model, vectorizer, tfidfconverter)
+    return (y_result[0] == 1)
+
 ## Tests ##
 
 
@@ -40,9 +48,9 @@ def test_chargement():
     assert model != None
 
 
-def test_detecteur_v3():
+def test_detecteur_ML():
     model = chargement('text_classifier')
-    b = detecteur_v3(X_data, model)
+    b = detecteur_ML(X_data, model)
     assert type(b) == np.ndarray
 
 ## Execution ##
@@ -50,5 +58,8 @@ def test_detecteur_v3():
 
 if __name__ == '__main__':
     model, vectorizer, tfidfconverter = chargement('text_classifier')
-    y_result = detecteur_v3(X_data, model, vectorizer, tfidfconverter)
-    print(np.where(y == 1))
+    print(X_data[37])
+    y_result = detecteur_ML(X_data, model, vectorizer, tfidfconverter)
+    print(np.where(y_result == 1))
+    print(detecteur_v3(
+        "katie hopkins: why wonât the left admit the #truth about islam?  @user #islam #political   #jealous #hate"))

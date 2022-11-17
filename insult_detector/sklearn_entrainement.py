@@ -18,14 +18,15 @@ from sklearn.datasets import load_files
 
 # dataset
 
-def creation_dataset(nom_fichier):
+def creation_dataset(nom_fichier, debut, fin):
     """
     entree: nom du fichier .csv en chaine de caractères (str)
     sortie: X_data pour les données (type pandas.Series), y_data (type pandas.Series) pour les objectifs de valeurs à atteindre: 1 si insulte et 0 sinon
     """
     data = pandas.read_csv(
         '/Users/alexandregravereaux/Desktop/CW/projet_w2/InsultBlock/insult_detector/train_data/' + nom_fichier, sep=',')
-    data = data[['tweet', 'label']][:1000]
+    data = data[['tweet', 'label']][debut:fin]
+    data.reset_index(inplace=True)
     X_data = data['tweet']
     y_data = data['label']
     return (X_data, y_data)
@@ -127,7 +128,7 @@ def entrainement_modele(X_train, y_train):
 ## Tests ##
 
 def test_creation_dataframe():
-    X_data, y_data = creation_dataset('train.csv')
+    X_data, y_data = creation_dataset('train.csv', 0, 500)
     assert type(X_data) == pandas.Series
     assert type(y_data) == pandas.Series
     assert 0 in y_data
@@ -165,7 +166,7 @@ if __name__ == '__main__':
 
     # Creation du modèle de ML
     print("*Creation du dataset en cours* \n")
-    X_data, y_data = creation_dataset('train.csv')
+    X_data, y_data = creation_dataset('train.csv', 0, 4000)
     print("*Preprocessing en cours* \n")
     L_tweets = preprocessing(X_data)
     print("*Creation du modèle en cours* \n")
