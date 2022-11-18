@@ -10,6 +10,7 @@ from projet_w2.InsultBlock.tweets_collect.main_collect import *
 data = to_dataframe('data_missile.json')
 data_user = to_dataframe('data_sandrousseau.json')
 
+
 ## Fonctions ##
 
 
@@ -25,6 +26,9 @@ def ajout_colonnes(data):
     data['heure'] = data['created_at'].apply(lambda x: x[11:13])
     data['mois'] = data['created_at'].apply(lambda x: x[4:7])
     return data
+
+
+data_user = ajout_colonnes(data_user)
 
 
 def nb_insultes(data):
@@ -205,18 +209,8 @@ def moyenne_reaction(data):
     else:
         return (0, 0)
 
-
-def ajout_colonnes_2(data):
-    """
-    entree: le dataframe initial
-    sortie: le dataframe modifié
-    """
-    # Ajout du nombre d'insulte de l'user
-    data['nb_insult_user'] = data['user.screen_name'].apply(nb_user_insult)
-    return data
-
-
 ## Tests ##
+
 
 def test_nb_insultes():
     nb_insultes = nb_insultes(data)

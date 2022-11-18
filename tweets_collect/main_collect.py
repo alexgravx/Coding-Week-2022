@@ -43,4 +43,4 @@ def test_main_subject():
 
 
 if __name__ == '__main__':
-    data = main_user("sandrousseau", 300)
+    data = main_subject("World Cup Qatar", 300)

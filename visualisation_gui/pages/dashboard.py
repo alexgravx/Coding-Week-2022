@@ -14,7 +14,7 @@ from projet_w2.InsultBlock.insult_detector.main_detector import detecteur
 dash.register_page(__name__, path='/dashboard', title='Accueil',
                    name='accueil', order=0)
 
-df = to_dataframe('data_sandrousseau.json')
+df = to_dataframe('data_G20.json')
 df = epuration_dataframe_elevee(df)
 
 
@@ -77,9 +77,7 @@ layout = html.Div([
 @ callback(
     Output(component_id='my-output', component_property='children'),
     State('my-input', 'value'),
-    Input('submit-val', 'n_clicks')
-
-)
+    Input('submit-val', 'n_clicks'))
 def update_output_div(input_value, n_clicks):
 
     if n_clicks >= 1:

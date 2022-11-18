@@ -22,9 +22,9 @@ layout = html.Div(
     children=[
         html.H1(children="Informations sur un utilisateur",
                 style={'padding-left': '20px'}),
-        html.Div([dcc.Input(placeholder="Entrer un nom d'utilisateur",
-                            id='user_name', type='text'),
-                  dbc.Button('Submit', id='submit-val-user', n_clicks=0, style={'background': '#FF7C7C'})], style={'width': '48%', 'display': 'inline-block', 'padding': '10px 10px 10px 20px'}),
+        dbc.Row([
+            dbc.Col(dbc.Input(placeholder="Entrer un utilisateur",
+                              id='user_name', type='text')), dbc.Col(dbc.Button('Submit', id='submit-val-user', n_clicks=0, style={'background': '#FF7C7C'}))], style={'width': '48%', 'padding': '10px 10px 10px 20px'}),
         html.Div([
 
             html.Div(
@@ -36,7 +36,12 @@ layout = html.Div(
                                       'user.friends_count': "Nombre d'amis", 'insult': 'Caractère insultant du tweet', 'nb_insult_user': "Nombre d'insultes postées par l'utilisateur"}, id='menu_ordonnées-user'), style={'width': '48%', 'float': 'right', 'display': 'inline-block', 'padding': '10px 10px 10px 10px'})
         ]),
         html.Div(
-            dcc.Graph(id='dash_graph_user'))
+            dcc.Graph(id='dash_graph_user')),
+        html.H1(children="Bloquer un utilisateur",
+                style={'padding': '0 0 40px 20px'}),
+        dbc.Row([
+            dbc.Col(dbc.Input(placeholder="Entrer un utilisateur",
+                              id='user_name_2', type='text')), dbc.Col(dbc.Button('Bloquer', id='submit-val-user-2', n_clicks=0, style={'background': '#A0A0A0'}))], style={'width': '48%', 'padding': '10px 10px 10px 20px'})
     ])
 
 
