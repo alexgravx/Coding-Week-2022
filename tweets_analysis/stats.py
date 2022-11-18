@@ -27,10 +27,6 @@ def ajout_colonnes(data):
     return data
 
 
-data = ajout_colonnes(data)
-data_user = ajout_colonnes(data_user)
-
-
 def nb_insultes(data):
     """
     Analyse d'opinion de la plateforme.

@@ -177,4 +177,4 @@ def test_texte_insultes():
 
 
 if __name__ == "__main__":
-    print(detecteur_v1("grosse puuuuuuuute"))
+    print(detecteur_v1("désolé"))

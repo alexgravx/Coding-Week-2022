@@ -9,7 +9,7 @@ from projet_w2.InsultBlock.insult_detector.cas_particuliers import insulte_cache
 
 
 def detecteur(text):
-    if detecteur_v1(text) or detecteur_v2(text) or detecteur_v3(text) or insulte_cachee(text):
+    if detecteur_v1(text) or detecteur_v3(text) or insulte_cachee(text):
         return True
     return False
 

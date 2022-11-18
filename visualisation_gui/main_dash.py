@@ -17,8 +17,7 @@ app = dash.Dash(__name__, external_stylesheets=[
 
 CONTENT_STYLE = {
     "margin-left": "18rem",
-    "margin-right": "2rem",
-    "padding": "2rem 1rem", }
+    "margin-right": "2rem"}
 
 
 nav_item1 = dbc.NavItem(dbc.NavLink("Dashboard", href="/dashboard"))
@@ -36,6 +35,7 @@ navbar = dbc.Navbar(
                             html.Img(src='data:image/png;base64,{}'.format(encoded_image.decode()), height="30px")),
                         dbc.Col(dbc.NavbarBrand(
                             "InsultBlock", className="ms-2")),
+                        dbc.Spinner(color="danger", size="sm")
                     ],
                     align="center",
                     className="g-0",

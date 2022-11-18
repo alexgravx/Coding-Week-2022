@@ -16,7 +16,7 @@ def chargement(nom_modele):
     entrée: nom du modèle de machine learning (str)
     sortie: objets ML: modèle, réduction en vecteur et fréquencisation dans les variables "model", 'vectorizer" et "tfidfconverter"
     """
-    with open('/Users/alexandregravereaux/Desktop/CW/projet_w2/InsultBlock/insult_detector/train_data/' + nom_modele, 'rb') as training_model:
+    with open('./projet_w2/InsultBlock/insult_detector/train_data/' + nom_modele, 'rb') as training_model:
         model, vectorizer, tfidfconverter = pickle.load(training_model)
     return model, vectorizer, tfidfconverter
 

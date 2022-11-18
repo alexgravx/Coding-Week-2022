@@ -43,7 +43,7 @@ def detect_negative_text(sentiment):
 
 def detecteur_v2(text, lang='fr'):
     '''
-    Cette fonction utilise la version 1 
+    Cette fonction utilise la version 1
     '''
     if lang == 'fr':
         if detect_negative_text(sentiment_text(text)):
@@ -64,7 +64,7 @@ def detecteur_v2(text, lang='fr'):
 
 
 def test_detect_negative_text():
-    ''' 
+    '''
     Fonction qui teste sentiment_text et detect_negative_text
     '''
     text = "You are fucked up"
@@ -79,5 +79,5 @@ def test_detect_negative_text():
 
 
 if __name__ == '__main__':
-    a = (detecteur_v2("T'es con"))
+    a = (detecteur_v2("désolé"))
     print(a)

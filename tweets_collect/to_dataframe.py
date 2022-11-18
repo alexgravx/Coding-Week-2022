@@ -39,6 +39,20 @@ def epuration_dataframe(data_brut):
     return data_twitter
 
 
+def epuration_dataframe_elevee(data_brut):
+    '''
+    entrée et sortie: dataframe pandas
+    Dataframe simplifié: on ne garde que les attributs (colonnes) intéréssantes
+    Amélioration de la date
+    '''
+    data_twitter = data_brut[['text', 'favorite_count', 'retweet_count', 'user.screen_name',  'user.name', 'created_at', 'user.description',
+                              'user.created_at', 'user.followers_count', 'user.friends_count', 'user.location', 'user.verified']].copy()
+
+    data_twitter['created_at'] = data_twitter['created_at'].apply(
+        lambda x: x[0:19])
+    return data_twitter
+
+
 ## Tests ##
 
 
