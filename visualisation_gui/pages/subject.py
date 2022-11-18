@@ -10,6 +10,7 @@ from projet_w2.InsultBlock.tweets_collect.to_dataframe import to_dataframe
 from projet_w2.InsultBlock.tweets_collect.main_collect import *
 from projet_w2.InsultBlock.insult_detector.detecteur_v1 import detecteur_v1
 from projet_w2.InsultBlock.tweets_collect.main_collect import main_subject
+from projet_w2.InsultBlock.tweets_analysis.stats import *
 
 ## Code ##
 
@@ -44,10 +45,10 @@ X2 = ['religion', 'macron', 'vaccin', 'guerre']
 Y2 = [insult_subject(subject) for subject in X2]
 
 df2 = pd.DataFrame({"subject": X2,
-                   "count of insults (in ratio pro nb of tweets about this subject)": Y2, })
+                   "count of insults": Y2, })
 
 fig2 = px.bar(df2, x="subject",
-              y="count of insults (in ratio pro nb of tweets about this subject)")
+              y="count of insults")
 
 
 layout = html.Div(
@@ -55,33 +56,26 @@ layout = html.Div(
         html.H1('Analyse des tweets par thème',
                 style={'padding-left': '20px'}),
         dcc.Graph(id='example-graph', figure=fig2),
-        dbc.Row([
-            dbc.Col(dbc.Toast(
-                [html.P("1928739", className="mb-0")],
-                id="simple-toast-1",
-                header="Nombre de Tweets postés",
-                icon="primary",
-                dismissable=True,
-                is_open=True)),
-            dbc.Col(dbc.Toast(
-                [html.P("16303", className="mb-0")],
-                id="simple-toast-2",
-                header="Nombres de tweets insultes",
-                icon="alert",
-                dismissable=True,
-                is_open=True)),
-            dbc.Col(dbc.Toast(
-                [html.P("4,678%", className="mb-0")],
-                id="simple-toast-3",
-                header="Pourcentage d'insultes",
-                icon="danger",
-                dismissable=True,
-                is_open=True))], style={'padding': '30px 0 0 40px'}),
         html.H2("Analyse des données du sujet",
                 style={'padding': '30px 0 0 30px'}),
         dbc.Row([
             dbc.Col(dbc.Input(placeholder="Entrer un thème",
-                              id='subject_name', type='text')), dbc.Col(dbc.Button('Submit', id='submit-val', n_clicks=0, style={'background': '#FF7C7C'}))], style={'width': '48%', 'padding': '10px 10px 10px 20px'}),
+                              id='subject_name', type='text')), dbc.Col(dbc.Button('Submit', id='submit-val', n_clicks=0, style={'background': '#FF7C7C'}))], style={'width': '48%', 'padding': '20px 10px 10px 20px'}),
+        dbc.Row([
+            dbc.Col(dbc.Toast(
+                [html.P("user_name", id='toast-1', className="mb-0")],
+                id="simple-toast-1",
+                header="Nombre d'insultes du sujet",
+                icon="primary",
+                dismissable=True,
+                is_open=True)),
+            dbc.Col(dbc.Toast(
+                [html.P("nb_insultes", id='toast-2', className="mb-0")],
+                id="simple-toast-2",
+                header="Nombres d'insultes max d'un user",
+                icon="alert",
+                dismissable=True,
+                is_open=True))], style={'padding': '30px 0 30px 50px'}),
         html.Div([
 
             html.Div(
@@ -99,6 +93,8 @@ layout = html.Div(
 
 @ callback(
     Output('dash_graph', 'figure'),
+    Output('toast-1', component_property='children'),
+    Output('toast-2', component_property='children'),
     State('subject_name', 'value'),
     Input('submit-val', 'n_clicks'),
     Input('menu_abcisses', 'value'),
@@ -107,6 +103,7 @@ def update_graphe(subject_name, n_clicks, xaxis_column_name, yaxis_column_name):
     if n_clicks >= 1:
         n_clicks = 0
         dff = main_subject(subject_name)
+        dff = ajout_colonnes(dff)
     fig = px.scatter(dff, x=xaxis_column_name,
                      y=yaxis_column_name)
 
@@ -114,4 +111,7 @@ def update_graphe(subject_name, n_clicks, xaxis_column_name, yaxis_column_name):
 
     fig.update_yaxes(title=yaxis_column_name, type='linear')
 
-    return fig
+    nb = nb_insultes(dff)[0]
+    max = max_insultes(dff)
+
+    return fig, nb, max

@@ -35,21 +35,21 @@ layout = html.Div([
             style={'textAlign': 'center'}),
     dbc.Row([
         dbc.Col(dbc.Toast(
-            [html.P("1928739", className="mb-0")],
+            [html.P("1400", className="mb-0")],
             id="simple-toast-1",
             header="Nombre de Tweets postés",
             icon="primary",
             dismissable=True,
             is_open=True)),
         dbc.Col(dbc.Toast(
-            [html.P("16303", className="mb-0")],
+            [html.P("66", className="mb-0")],
             id="simple-toast-2",
             header="Nombres de tweets insultes",
             icon="alert",
             dismissable=True,
             is_open=True)),
         dbc.Col(dbc.Toast(
-            [html.P("4,678%", className="mb-0")],
+            [html.P("4,71%", className="mb-0")],
             id="simple-toast-3",
             header="Pourcentage d'insultes",
             icon="danger",

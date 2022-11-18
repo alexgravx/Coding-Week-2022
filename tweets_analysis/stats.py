@@ -1,6 +1,7 @@
 ## Importations ##
 
 # Modules
+from projet_w2.InsultBlock.insult_detector.detecteur_v1 import detecteur_v1
 from projet_w2.InsultBlock.insult_detector.main_detector import detecteur
 from projet_w2.InsultBlock.tweets_collect.to_dataframe import to_dataframe
 from projet_w2.InsultBlock.tweets_collect.main_collect import *
@@ -20,15 +21,14 @@ def ajout_colonnes(data):
     sortie: le dataframe modifié
     """
     # Ajout de la colonne insulte
-    data['insult'] = data['text'].apply(detecteur)
+    data['insult'] = data['text'].apply(detecteur_v1)
     # Ajout de colonne 'jour' et heure
+    """
     data['jour'] = data['created_at'].apply(lambda x: x[8:10])
     data['heure'] = data['created_at'].apply(lambda x: x[11:13])
     data['mois'] = data['created_at'].apply(lambda x: x[4:7])
+    """
     return data
-
-
-data_user = ajout_colonnes(data_user)
 
 
 def nb_insultes(data):

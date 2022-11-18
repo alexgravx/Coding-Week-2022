@@ -156,7 +156,11 @@ def detecteur_v1(insulte, lang='fr'):
     """str en entrée // bool en sortie
     Renvoyer True si le groupe de mot est une insulte
     Renvoyer False si le groupe de mot n'est pas une insulte"""
-    return (list_insultes(insulte, lang) != [])
+    a = list_insultes(insulte, lang) != []
+    if a:
+        return 1
+    else:
+        return 0
 
 ## TESTS ##
 
