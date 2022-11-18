@@ -29,11 +29,11 @@ layout = html.Div(
 
             html.Div(
                  dcc.Dropdown(options={'favorite_count': 'Nombre de likes', 'retweet_count': 'Nombre de retweets', 'user.favourites_count': 'Nombre de Likes du compte', 'user.followers_count': 'Nombre de followers',
-                                       'user.friends_count': "Nombre d'amis", 'insult': 'Caractère insultant du tweet', 'nb_insult_user': "Nombre d'insultes postées par l'utilisateur"}, id='menu_abcisses-user'), style={'width': '48%', 'display': 'inline-block', 'padding': '10px 10px 10px 20px'}),
+                                       'user.friends_count': "Nombre d'amis", 'insult': 'Caractère insultant du tweet'}, id='menu_abcisses-user'), style={'width': '48%', 'display': 'inline-block', 'padding': '10px 10px 10px 20px'}),
 
             html.Div(
                 dcc.Dropdown(options={'favorite_count': 'Nombre de likes', 'retweet_count': 'Nombre de retweets', 'user.favourites_count': 'Nombre de Likes du compte', 'user.followers_count': 'Nombre de followers',
-                                      'user.friends_count': "Nombre d'amis", 'insult': 'Caractère insultant du tweet', 'nb_insult_user': "Nombre d'insultes postées par l'utilisateur"}, id='menu_ordonnées-user'), style={'width': '48%', 'float': 'right', 'display': 'inline-block', 'padding': '10px 10px 10px 10px'})
+                                      'user.friends_count': "Nombre d'amis", 'insult': 'Caractère insultant du tweet'}, id='menu_ordonnées-user'), style={'width': '48%', 'float': 'right', 'display': 'inline-block', 'padding': '10px 10px 10px 10px'})
         ]),
         html.Div(
             dcc.Graph(id='dash_graph_user')),
