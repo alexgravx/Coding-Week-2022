@@ -6,11 +6,11 @@ import plotly.express as px
 import dash_bootstrap_components as dbc
 from dash import html, dcc, State, callback
 from dash.dependencies import Input, Output
-from projet_w2.InsultBlock.tweets_collect.to_dataframe import to_dataframe
-from projet_w2.InsultBlock.tweets_collect.main_collect import *
-from projet_w2.InsultBlock.insult_detector.detecteur_v1 import detecteur_v1
-from projet_w2.InsultBlock.tweets_collect.main_collect import main_subject
-from projet_w2.InsultBlock.tweets_analysis.stats import *
+from tweets_collect.to_dataframe import to_dataframe
+from tweets_collect.main_collect import *
+from insult_detector.detecteur_v1 import detecteur_v1
+from tweets_collect.main_collect import main_subject
+from tweets_analysis.stats import *
 
 ## Code ##
 

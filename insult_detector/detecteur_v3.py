@@ -3,7 +3,7 @@
 import pickle
 import numpy as np
 import pandas as pd
-from projet_w2.InsultBlock.insult_detector.sklearn_entrainement import *
+from insult_detector.sklearn_entrainement import *
 
 ## Fonctions ##
 

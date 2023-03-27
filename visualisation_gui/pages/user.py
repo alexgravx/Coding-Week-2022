@@ -7,9 +7,9 @@ import dash_bootstrap_components as dbc
 from dash import html
 from dash import html, dcc, Input, Output, State, callback
 from dash.dependencies import Input, Output
-from projet_w2.InsultBlock.tweets_collect.to_dataframe import to_dataframe
-from projet_w2.InsultBlock.tweets_collect.main_collect import *
-from projet_w2.InsultBlock.tweets_analysis.stats import *
+from tweets_collect.to_dataframe import to_dataframe
+from tweets_collect.main_collect import *
+from tweets_analysis.stats import *
 
 
 dash.register_page(__name__, path="/users",

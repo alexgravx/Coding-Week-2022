@@ -1,7 +1,7 @@
 ## Importations ##
 
 import tweepy
-from projet_w2.credentials import *
+from credentials import *
 
 
 ## Fonctions ##

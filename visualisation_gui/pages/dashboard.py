@@ -8,8 +8,8 @@ import dash_bootstrap_components as dbc
 from dash import html
 from dash import dcc, Input, Output, State, callback
 from dash.dependencies import Input, Output
-from projet_w2.InsultBlock.tweets_collect.to_dataframe import *
-from projet_w2.InsultBlock.insult_detector.main_detector import detecteur
+from tweets_collect.to_dataframe import *
+from insult_detector.main_detector import detecteur
 
 dash.register_page(__name__, path='/dashboard', title='Accueil',
                    name='accueil', order=0)

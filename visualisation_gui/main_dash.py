@@ -8,7 +8,7 @@ from dash import html
 from dash import Input, Output, State, html, dcc, callback
 import base64
 
-Logo_src = "./projet_w2/InsultBlock/visualisation_gui/Logo.png"
+Logo_src = "./visualisation_gui/Logo.png"
 
 encoded_image = base64.b64encode(open(Logo_src, 'rb').read())
 
@@ -63,7 +63,3 @@ app.layout = html.Div([
     content,
     dash.page_container
 ])
-
-
-if __name__ == '__main__':
-    app.run_server(debug=True, port=3000)

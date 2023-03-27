@@ -2,8 +2,8 @@
 
 import tweepy
 from tweepy.streaming import StreamingClient
-from projet_w2.InsultBlock.tweets_collect.api_connection import twitter_setup
-from projet_w2.credentials import *
+from tweets_collect.api_connection import twitter_setup
+from credentials import *
 
 # Fonctions
 

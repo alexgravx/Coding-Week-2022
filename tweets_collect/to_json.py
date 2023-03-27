@@ -1,7 +1,7 @@
 ## Importations ##
 
 import json
-from projet_w2.InsultBlock.tweets_collect.search_tweets import *
+from tweets_collect.search_tweets import *
 
 ## Fonctions ##
 

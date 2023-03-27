@@ -1,10 +1,10 @@
 ## Importations ##
 
 # Modules
-from projet_w2.InsultBlock.insult_detector.detecteur_v1 import detecteur_v1
-from projet_w2.InsultBlock.insult_detector.main_detector import detecteur
-from projet_w2.InsultBlock.tweets_collect.to_dataframe import to_dataframe
-from projet_w2.InsultBlock.tweets_collect.main_collect import *
+from insult_detector.detecteur_v1 import detecteur_v1
+from insult_detector.main_detector import detecteur
+from tweets_collect.to_dataframe import to_dataframe
+from tweets_collect.main_collect import *
 
 
 # Import dataframe

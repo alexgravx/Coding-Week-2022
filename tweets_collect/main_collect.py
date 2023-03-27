@@ -1,7 +1,7 @@
 ## Importations ##
 
-from projet_w2.InsultBlock.tweets_collect.to_json import *
-from projet_w2.InsultBlock.tweets_collect.to_dataframe import *
+from tweets_collect.to_json import *
+from tweets_collect.to_dataframe import *
 
 ## Programme ##
 
