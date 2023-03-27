@@ -57,6 +57,7 @@ def update_graphe(user_name, n_clicks, xaxis_column_name, yaxis_column_name):
     if n_clicks >= 1:
         n_clicks = 0
         dff = main_user(user_name)
+        dff = ajout_colonnes(dff)
     fig = px.scatter(dff, x=xaxis_column_name,
                      y=yaxis_column_name)
 

@@ -181,4 +181,4 @@ def test_texte_insultes():
 
 
 if __name__ == "__main__":
-    print(detecteur_v1("désolé"))
+    print(detecteur_v1("Impact de foudre sur la tour Eiffel cet après vers 18h pendant le scintillement :) Pris simultanément avec 2 appareils. "))
