@@ -12,6 +12,48 @@ Depending on what you are making, it can be a good idea to include screenshots o
 Le dépôt est codé en Python 3.10.6
 L'installation doit être faite selon l'arborescence suivante:
 
+"""
+.
+├── README.md
+├── credentials.py
+├── insult_detector
+│   ├── cas_particuliers.py
+│   ├── detecteur_v1.py
+│   ├── detecteur_v2.py
+│   ├── detecteur_v3.py
+│   ├── insult.txt
+│   ├── main_detector.py
+│   ├── sklearn_entrainement.py
+│   └── train_data
+│       ├── text_classifier
+│       ├── train.csv
+│       └── train2.csv
+├── main.py
+├── requirements.txt
+├── tweets_analysis
+│   └── stats.py
+├── tweets_collect
+│   ├── api_connection.py
+│   ├── main_collect.py
+│   ├── search_tweets.py
+│   ├── to_dataframe.py
+│   ├── to_json.py
+│   └── twitter_candidate_data
+│       ├── hashtag_candidate_n.txt
+│       └── keywords_candidate_n.txt
+├── tweets_data
+│   └── data_test.json
+└── visualisation_gui
+    ├── Logo.png
+    ├── main_dash.py
+    ├── pages
+    │   ├── dashboard.py
+    │   ├── subject.py
+    │   └── user.py
+    └── word_cloud.py
+
+"""
+
 ## Usage
 Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
 
