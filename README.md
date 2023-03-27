@@ -12,7 +12,7 @@ Depending on what you are making, it can be a good idea to include screenshots o
 Le dépôt est codé en Python 3.10.6
 L'installation doit être faite selon l'arborescence suivante:
 
-"""
+'''
 .
 ├── README.md
 ├── credentials.py
@@ -52,7 +52,7 @@ L'installation doit être faite selon l'arborescence suivante:
     │   └── user.py
     └── word_cloud.py
 
-"""
+'''
 
 ## Usage
 Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
