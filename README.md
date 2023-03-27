@@ -4,9 +4,13 @@
 ## Description
 Détecteur d'insulte intelligent sur Twitter. Détection des insultes, analyse de la répercussion d'une insulte sur les autres commentaires d'un tweet et visualisation des insultes de chaque utilisateur avec des statistiques (max, min, moyenne d'insultes par utilisateur selon certaines catégories). Visualisation prévue sur Dash/Seaborn/Plotly et aussi WordCloud.
 
+## Dependencies
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+First of all, you can install dependencies with:
+
+```
+pip install -r requirement.txt
+```
 
 ## Installation
 Le dépôt est codé en Python 3.10.6
