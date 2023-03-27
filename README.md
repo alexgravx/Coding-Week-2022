@@ -2,12 +2,12 @@
 
 <img src="./visualisation_gui/Logo.png" width="120">
 
-## Description
+## 📖 Description
 Smart insult detector on Twitter. Detection of insults, analysis of the repercussion of an insult on other comments of a tweet and visualization of insults of each user with statistics (max, min, average of insults per user according to some categories). Visualization planned on Dash
 
 Détecteur d'insulte intelligent sur Twitter. Détection des insultes, analyse de la répercussion d'une insulte sur les autres commentaires d'un tweet et visualisation des insultes de chaque utilisateur avec des statistiques (max, min, moyenne d'insultes par utilisateur selon certaines catégories). Visualisation prévue sur Dash/Seaborn/Plotly et aussi WordCloud.
 
-## 📦  Dependencies
+## 📦 Dependencies
 
 First of all, you can install dependencies with:
 
@@ -15,7 +15,7 @@ First of all, you can install dependencies with:
 pip install -r requirement.txt
 ```
 
-## 📥  Installation
+## 📥 Installation
 Le dépôt est codé en Python 3.10.6
 L'installation doit être faite selon l'arborescence suivante:
 
@@ -64,7 +64,7 @@ L'installation doit être faite selon l'arborescence suivante:
 ## Support
 Pas de support pour l'instant
 
-## 🛣️  Roadmap
+## 🛣️ Roadmap
 
 1. Création du détecteur d'insultes
 2. Récupération des tweets
