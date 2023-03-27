@@ -4,6 +4,8 @@
 ## Description
 Détecteur d'insulte intelligent sur Twitter. Détection des insultes, analyse de la répercussion d'une insulte sur les autres commentaires d'un tweet et visualisation des insultes de chaque utilisateur avec des statistiques (max, min, moyenne d'insultes par utilisateur selon certaines catégories). Visualisation prévue sur Dash/Seaborn/Plotly et aussi WordCloud.
 
+Smart insult detector on Twitter. Detection of insults, analysis of the repercussion of an insult on other comments of a tweet and visualization of insults of each user with statistics (max, min, average of insults per user according to some categories). Visualization planned on Dash
+
 ## Dependencies
 
 First of all, you can install dependencies with:
